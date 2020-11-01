@@ -7,5 +7,5 @@ Managing a team building a CRM tool for a Montreal-based nonprofit. This tool al
 **Project Manager:**
 
 **Developers:** 
-
+* [Peter Guanhua Rong](https://github.com/peterghrong)
 **Designer:** 
