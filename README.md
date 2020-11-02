@@ -4,9 +4,10 @@ Managing a team building a CRM tool for a Montreal-based nonprofit. This tool al
 
 ## Development Team
 
-**Project Manager:**
+**Project Manager:** [Celine Huang](https://github.com/celinehuang)
 
 **Developers:** 
 * [Peter Guanhua Rong](https://github.com/peterghrong)
+* [Curtis Lin](https://github.com/CurtisMIT)
 
 **Designer:** 
