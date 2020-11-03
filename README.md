@@ -11,3 +11,4 @@ Managing a team building a CRM tool for a Montreal-based nonprofit. This tool al
 * [Curtis Lin](https://github.com/CurtisMIT)
 
 **Designer:** 
+* [Jerry Xia](https://github.com/jerryliangxia)
