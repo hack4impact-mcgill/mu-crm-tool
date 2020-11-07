@@ -1,11 +1,12 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 from config import config
 
-# db = SQLAlchemy()
-# migrate = Migrate()
+db = SQLAlchemy()
+migrate = Migrate()
 
 
 def create_app(config_name):
@@ -20,8 +21,8 @@ def create_app(config_name):
     config[config_name].init_app(app)
 
     # call init_app to complete initialization
-    # db.init_app(app)
-    # migrate.init_app(app, db)
+    db.init_app(app)
+    migrate.init_app(app, db)
 
     # create app blueprints
     from .main import main as main_blueprint

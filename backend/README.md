@@ -1,4 +1,10 @@
-# How to Run
+# Setup and Installation
+
+Running the backend requires having some environment variables defined. To do this, create a file called `.env` at the root of the backend folder, and copy the content of `.env.dist` into your file.
+
+Once this file is created with proper values, the app will automatically load them into the environment when run.
+
+## Project Dependencies
 
 First off, make sure to create a virtual environment on your machine. A virtual environment can be created with either `virtualenv` (python 2) or `venv` (python 3). For `venv`:
 
@@ -21,6 +27,36 @@ To see all installed modules:
 ```
 pip list
 ```
+
+## Database
+​Make sure you have [Docker Desktop](https://www.docker.com/get-started) on your machine.
+
+To spin-up the database:
+​
+```
+docker-compose up -d
+```
+​
+To view all containers:
+​
+```
+docker ps -a
+```
+​
+To stop containers without removing them:
+​
+```
+docker-compose stop
+```
+​
+To stop containers and remove them (along with their volumes—this will drop all tables from the database!):
+​
+```
+docker-compose down -v
+```
+​
+The URL for the (development) database in container is `"postgresql://mucrm:mucrm@localhost:5432/postgres"`
+
 
 ## Flask App Folder Structure
 
