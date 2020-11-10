@@ -13,6 +13,7 @@ Managing a team building a CRM tool for a Montreal-based nonprofit. This tool al
 * [Madonna Huang](https://github.com/cc-21)
 * [Carol Altimas](https://github.com/carolaltimas)
 * [Sym Piracha](https://github.com/SymPiracha)
+* [Ahmad Ghawanmeh](https://github.com/aqghawa)
 
 **Designer:** 
 * [Jerry Xia](https://github.com/jerryliangxia)
