@@ -7,12 +7,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 # Many-to-Many relationships requires helper table
 # According to the flask documentation
-contacts = db.Table('contacts',
-                    db.Column('contact_id', db.Integer, db.ForeignKey(
-                        'contact.id'), primary_key=True),
-                    db.Column('project_id', db.Integer, db.ForeignKey(
-                        'project.id'), primary_key=True)
-                    )
+contacts = db.Table(
+    "contacts",
+    db.Column("contact_id", db.Integer, db.ForeignKey("contact.id"), primary_key=True),
+    db.Column("project_id", db.Integer, db.ForeignKey("project.id"), primary_key=True),
+)
 # Project Model
 
 
@@ -27,6 +26,10 @@ class Project(db.Model):
     name = db.Column(db.String(64))
     type = db.Column(db.String(64))
     # one-to-many relationship to Note
-    notes = db.relationship('Note', backref='project', lazy=True)
+    notes = db.relationship("Note", backref="project", lazy=True)
     contacts = db.relationship(
-        'Contact', secondary=contacts, lazy='subquery', backref=db.backref('projects', lazy=True))
+        "Contact",
+        secondary=contacts,
+        lazy="subquery",
+        backref=db.backref("projects", lazy=True),
+    )
