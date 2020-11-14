@@ -2,6 +2,9 @@ import json
 
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.dialects.postgresql import UUID
+import uuid
+
 
 # create model classes here
 
@@ -16,7 +19,13 @@ contacts = db.Table(
 
 
 class Project(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+        unique=True,
+        nullable=False,
+    )
     address = db.Column(db.String(256))
     city = db.Column(db.String(64))
     province = db.Column(db.String(64))
