@@ -5,7 +5,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
-
 # create model classes here
 
 # Many-to-Many relationships requires helper table
