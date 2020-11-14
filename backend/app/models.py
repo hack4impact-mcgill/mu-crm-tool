@@ -16,7 +16,6 @@ contacts = db.Table(
 )
 # Project Model
 
-
 class Project(db.Model):
     id = db.Column(
         UUID(as_uuid=True),
