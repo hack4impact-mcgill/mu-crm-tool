@@ -15,4 +15,4 @@ class Note(db.Model):
     # many to one relationship to Project
     project_id = db.relationship(db.Integer, db.Foreign_Key('project.id'), nullable=False)
     # many one to relationship to MuUser via created_by
-    created_by = db.relationship(db.Integer, db.Foreign_Key('muuser.id'), nullable=False)
+    created_by = db.relationship(db.Integer, db.ForeignKey('muuser.id'), nullable=False)
