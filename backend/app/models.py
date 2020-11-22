@@ -11,19 +11,26 @@ import uuid
 # According to the flask documentation
 contacts = db.Table(
     "contacts",
-    db.Column("contact_id", db.Integer, db.ForeignKey("contact.id"), primary_key=True),
-    db.Column("project_id", db.Integer, db.ForeignKey("project.id"), primary_key=True),
+    db.Column(
+        "contact_id",
+        UUID(as_uuid=True),
+        db.ForeignKey("contact.id"),
+        primary_key=True,
+        default=uuid.uuid4,
+    ),
+    db.Column(
+        "project_id",
+        UUID(as_uuid=True),
+        db.ForeignKey("project.id"),
+        primary_key=True,
+        default=uuid.uuid4,
+    ),
 )
 # Project Model
 
+
 class Project(db.Model):
-    id = db.Column(
-        UUID(as_uuid=True),
-        primary_key=True,
-        default=uuid.uuid4,
-        unique=True,
-        nullable=False,
-    )
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     address = db.Column(db.String(256))
     city = db.Column(db.String(64))
     province = db.Column(db.String(64))
