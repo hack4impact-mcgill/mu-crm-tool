@@ -19,13 +19,13 @@ def verify_auth_token(token):
         return False  # valid token, but expired
     except BadSignature:
         return False  # invalid token
-    user = User.query.get(data["token"])
+    user = MuUser.query.get(data["token"])
     return user
 #MuUser Domain Model Class
-class User(db.Model)    
+class MuUser(db.Model)    
     #Initializing Table
     __tablename__='users'
-    user_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
@@ -51,13 +51,13 @@ class User(db.Model)
         return True
     def generate_auth_token(self, expiration=86400):
         s = Serializer(current_app.config["SECRET_KEY"], expiration)
-        return s.dumps({"token": self.user_id})
+        return s.dumps({"token": self.id})
     #Serialize class
     @property
     def serialize(self):
         """Return object data in serializeable format"""
         return {
-            "user_id": self.user_id,
+            "id": self.id,
             "name": self.name,
             "password_hash": self.password_hash,
             "email": self.email,
