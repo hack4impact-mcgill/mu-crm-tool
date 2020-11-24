@@ -27,7 +27,7 @@ class MuUser(db.Model):
             "name": self.name,
             "password_hash": self.password_hash,
             "email": self.email,
-            "role": self.role,
+            "role": self.role
         }
     @staticmethod
     def serialize_list(users):
