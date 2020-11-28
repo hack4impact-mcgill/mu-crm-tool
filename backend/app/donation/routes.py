@@ -44,3 +44,46 @@ def create_donation():
     db.session.add(new_donation)
     db.session.commit()
     return jsonify(new_donation.serialize)
+
+
+# Update Donation
+@donation.route("/update_dontation/<donation_uuid>", methods=["PUT"])
+def update_donation(donation_uuid):
+    data = request.get_json(force=True)
+    donation = Donation.query.get(donation_uuid)
+    if donation is None:
+        abort(404, "No donation found with specified UUID")
+    name = data.get("name")
+    email = data.get("email")
+    date = data.get("date")
+    donationSource = data.get("donationSource")
+    event = data.get("event")
+    numTickets = data.get("numTickets")
+    addedBy = data.get("addedBy")
+    if (
+        name == ""
+        and email == ""
+        and date is None
+        and donationSource == ""
+        and event == ""
+        and numTickets is None
+        and addedBy == ""
+    ):
+        abort(400, "No donation fields to update")
+    if name:
+        donation.name = name
+    if email:
+        donation.email = email
+    if date:
+        donation.date = date
+    if donationSource:
+        donation.donationSource = donationSource
+    if event:
+        donation.event = event
+    if numTickets:
+        donation.numTickets = int(numTickets)
+    if addedBy:
+        donation.addedBy = addedBy
+    db.session.add(donation)
+    db.session.commit()
+    return jsonify(donation.serialize)
