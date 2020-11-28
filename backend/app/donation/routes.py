@@ -87,3 +87,14 @@ def update_donation(donation_uuid):
     db.session.add(donation)
     db.session.commit()
     return jsonify(donation.serialize)
+
+
+# Delete Donation (#why_so_heartless)
+@donation.route("/<donation_uuid>", methods=["DELETE"])
+def delete_donation(donation_uuid):
+    donation = Donation.query.get(donation_uuid)
+    if donation:
+        abort(404, "No donation found with specified UUID")
+    db.session.delete(donation)
+    db.session.commit()
+    return jsonify(donation.serialize)
