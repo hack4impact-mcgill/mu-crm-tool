@@ -47,3 +47,11 @@ class Project(db.Model):
         lazy="subquery",
         backref=db.backref("projects", lazy=True),
     )
+
+# Contact Type Model
+class ContactType(db.Model):
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    __tablename__ = "contacttype"
+    hexColour = db.Column(db.String(8))
+    type = db.Column(db.String(64))
+    description = db.Column(db.String(512))
