@@ -48,6 +48,7 @@ class Project(db.Model):
         backref=db.backref("projects", lazy=True),
     )
 
+
 # Contact Type Model
 class ContactType(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
