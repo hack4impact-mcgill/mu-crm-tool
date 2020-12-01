@@ -51,8 +51,9 @@ class Project(db.Model):
 
 # Contact Type Model
 class ContactType(db.Model):
+    __tablename__ = "contact_type"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    __tablename__ = "contacttype"
     hexColour = db.Column(db.String(8))
     type = db.Column(db.String(64))
     description = db.Column(db.String(512))
+    contact = db.relationship("Contact", backref="contact_type", lazy=True)
