@@ -1,7 +1,6 @@
 import json
 
 from . import db
-from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
@@ -20,7 +19,6 @@ class MuUser(db.Model):
     )
     name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
     role = db.Column(db.String(32), unique=True, nullable=False)
     # Relationships
     notes = db.relationship("Note", backref="user", lazy=True)
@@ -32,7 +30,6 @@ class MuUser(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "password_hash": self.password_hash,
             "email": self.email,
             "role": self.role,
         }
