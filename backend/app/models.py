@@ -10,8 +10,8 @@ class Note(db.Model):
     __tablename__ = "notes"
     note_id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(256), nullable=False)
-    createdDateTime = db.Column(db.DateTime(), default=datetime.utcnow)
-    updatedDateTime = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
+    createdDateTime = db.Column(db.DateTime(), default=datetime.utcnow, nullable=False)
+    updatedDateTime = db.Column(db.DateTime(), default=None, nullable=False)
     # many to one relationship to Project
     project_id = db.relationship(db.Integer, db.Foreign_Key('project.id'), nullable=False)
     # many one to relationship to MuUser via created_by
