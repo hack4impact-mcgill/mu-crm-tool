@@ -30,6 +30,3 @@ def delete_note(id):
     db.session.commit()
 
     return jsonify(note.serialize)
-   
- 
-    
