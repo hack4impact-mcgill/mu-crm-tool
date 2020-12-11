@@ -13,11 +13,9 @@ def edit_note(id):
     if note is None:
         abort(404, "No note found with specified id")
     
-    
     if description is not None:
         note.description = description
-
-        
+   
     if description == "":
         abort(404, "Nothing to update")
     
