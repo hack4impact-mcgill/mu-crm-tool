@@ -12,17 +12,19 @@ def edit_note(id):
     note = Note.query.filter_by(note_id=id).first()
     if note is None:
         abort(404, "No note found with specified id")
-        
+    
+    
     if description is not None:
         note.description = description
 
+        
     if description == "":
         abort(404, "Nothing to update")
+    
     
     note.updatedDateTime = datetime.datetime.utcnow()
 
     return jsonify(note.serialize)
-
 
 
 @note.route("/<note_uuid>", METHODS=["DELETE"])
