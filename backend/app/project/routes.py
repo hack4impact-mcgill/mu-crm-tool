@@ -1,9 +1,8 @@
-from flask import Flask, jsonify, request, abort, make_response
-from . import donation
+from flask import Flask, jsonify, abort
+from . import project
 from . import db
 from app.models import Project
 import uuid
-from datetime import datetime
 
 # delete a project
 @project.route("/<project_uuid>", METHODS=["DELETE"])
