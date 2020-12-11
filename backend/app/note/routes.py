@@ -1,4 +1,4 @@
-rom flask import Flask, abort, jsonify, request
+from flask import Flask, abort, jsonify, request
 from . import note
 from . import db
 from app.models import Note
