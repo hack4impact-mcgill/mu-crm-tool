@@ -152,8 +152,8 @@ class Contact(db.Model):
     contact_type = db.Column(UUID(as_uuid=True), db.ForeignKey('contact_type.id'), nullable=False)
     
     
- #helper table as required for many to many relationships   
- projects = db.Table('projects',
+#helper table as required for many to many relationships   
+projects = db.Table('projects',
                     db.Column('project_id', UUID(as_uuid=True),
                               db.ForeignKey('project.id'), primary_key=True),
                     db.Column('contact_id', UUID(as_uuid=True),
