@@ -83,6 +83,32 @@ class Project(db.Model):
         backref=db.backref("projects", lazy=True),
     )
 
+    @property
+    def serialize(self):
+        """Return object data in serializeable format"""
+        return {
+            "id": self.id,
+            "address": self.address,
+            "city": self.city,
+            "province": self.province,
+            "postal_code": self.postal_code,
+            "neighbourhood": self.neighbourhood,
+            "year": self.year,
+            "name": self.name,
+            "type": self.type,
+            "contacts": self.contacts,
+        }
+
+    @staticmethod
+    def serialize_list(projects):
+        json_projects = []
+        for i in projects:
+            json_projects.append(i.serialize)
+        return json_projects
+
+    def __repr__(self):
+        return "<Projects%r>" % self.id
+
 
 # Contact Type Model
 class ContactType(db.Model):
