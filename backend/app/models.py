@@ -80,7 +80,7 @@ class Project(db.Model):
         "Contact",
         secondary=contacts,
         lazy="subquery",
-        backref=db.backref("projects", lazy=True),
+        backref=db.backref("project", lazy=True),
     )
 
 
@@ -91,7 +91,7 @@ class ContactType(db.Model):
     hex_colour = db.Column(db.String(8))
     type = db.Column(db.String(64))
     description = db.Column(db.String(512))
-    contact = db.relationship("Contact", backref="ContactType", lazy=True)
+    contact = db.relationship("Contact", backref="contacttype", lazy=True)
 
 
 # MuUser Domain Model Class
