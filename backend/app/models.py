@@ -107,7 +107,7 @@ class Project(db.Model):
         return json_projects
 
     def __repr__(self):
-        return "<Projects%r>" % self.id
+        return "<Project %r>" % self.id
 
 
 # Contact Type Model
