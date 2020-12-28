@@ -67,7 +67,7 @@ contacts = db.Table(
 
 
 class Project(db.Model):
-    __tablename__ = "Project"
+    __tablename__ = "Projects"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     address = db.Column(db.String(256))
     city = db.Column(db.String(64))
@@ -87,12 +87,12 @@ class Project(db.Model):
 
 # Contact Type Model
 class ContactType(db.Model):
-    __tablename__ = "ContactType"
+    __tablename__ = "ContactTypes"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     hex_colour = db.Column(db.String(8))
     type = db.Column(db.String(64))
     description = db.Column(db.String(512))
-    contact = db.relationship("Contact", backref="contact_type", lazy=True)
+    contact = db.relationship("Contact", backref="ContactType", lazy=True)
 
 
 # MuUser Domain Model Class
