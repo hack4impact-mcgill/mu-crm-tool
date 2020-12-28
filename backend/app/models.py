@@ -1,5 +1,4 @@
 import json
-
 from . import db
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
@@ -9,7 +8,7 @@ import datetime
 
 # Donation Model
 class Donation(db.Model):
-    __tablename__ = "Donations"
+    __tablename__ = "donations"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
@@ -67,7 +66,7 @@ contacts = db.Table(
 
 
 class Project(db.Model):
-    __tablename__ = "Projects"
+    __tablename__ = "projects"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     address = db.Column(db.String(256))
     city = db.Column(db.String(64))
@@ -87,7 +86,7 @@ class Project(db.Model):
 
 # Contact Type Model
 class ContactType(db.Model):
-    __tablename__ = "ContactTypes"
+    __tablename__ = "contacttypes"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     hex_colour = db.Column(db.String(8))
     type = db.Column(db.String(64))
@@ -98,7 +97,7 @@ class ContactType(db.Model):
 # MuUser Domain Model Class
 class MuUser(db.Model):
     # Initializing Table
-    __tablename__ = "Users"
+    __tablename__ = "users"
     id = db.Column(
         UUID(as_uuid=True),
         primary_key=True,
