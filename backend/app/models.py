@@ -76,8 +76,6 @@ class Project(db.Model):
     year = db.Column(db.Integer)
     name = db.Column(db.String(64))
     type = db.Column(db.String(64))
-    # one-to-many relationship to Note
-    notes = db.relationship("Note", backref="project", lazy=True)
     contacts = db.relationship(
         "Contact",
         secondary=contacts,
@@ -110,8 +108,6 @@ class MuUser(db.Model):
     name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
     role = db.Column(db.String(32), unique=True, nullable=False)
-    # Relationships
-    notes = db.relationship("Note", backref="user", lazy=True)
     donations = db.relationship("Donation", backref="user", lazy=True)
     # Serialize class
     @property
