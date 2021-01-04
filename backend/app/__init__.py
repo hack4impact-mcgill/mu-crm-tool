@@ -45,8 +45,4 @@ def create_app(config_name):
 
     app.register_blueprint(mu_user_blueprint, url_prefix="/mu_user")
 
-    from .note import note as note_blueprint
-
-    app.register_blueprint(note_blueprint, url_prefix="/note")
-
     return app

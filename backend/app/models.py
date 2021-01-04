@@ -1,5 +1,4 @@
 import json
-
 from . import db
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
@@ -14,23 +13,23 @@ class Donation(db.Model):
     name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
     date = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
-    donationSource = db.Column(db.String(128), nullable=False)
+    donation_source = db.Column(db.String(128), nullable=False)
     event = db.Column(db.String(128))
-    numTickets = db.Column(db.Integer)
-    addedBy = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=True)
+    num_tickets = db.Column(db.Integer)
+    added_by = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=True)
 
     @property
     def serialize(self):
         """Return object data in serializeable format"""
         return {
-            "id": self.user_id,
+            "id": self.id,
             "name": self.name,
             "email": self.email,
             "date": self.date,
-            "donationSource": self.donationSource,
+            "donation_source": self.donation_source,
             "event": self.event,
-            "numTickets": self.numTickets,
-            "addedBy": self.addedBy,
+            "num_tickets": self.num_tickets,
+            "added_by": self.added_by,
         }
 
     @staticmethod
@@ -67,11 +66,12 @@ contacts = db.Table(
 
 
 class Project(db.Model):
+    __tablename__ = "projects"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     address = db.Column(db.String(256))
     city = db.Column(db.String(64))
     province = db.Column(db.String(64))
-    postalCode = db.Column(db.String(64))
+    postal_code = db.Column(db.String(64))
     neighbourhood = db.Column(db.String(256))
     year = db.Column(db.Integer)
     name = db.Column(db.String(64))
@@ -80,18 +80,18 @@ class Project(db.Model):
         "Contact",
         secondary=contacts,
         lazy="subquery",
-        backref=db.backref("projects", lazy=True),
+        backref=db.backref("project", lazy=True),
     )
 
 
 # Contact Type Model
 class ContactType(db.Model):
-    __tablename__ = "contact_type"
+    __tablename__ = "contacttypes"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    hexColour = db.Column(db.String(8))
+    hex_colour = db.Column(db.String(8))
     type = db.Column(db.String(64))
     description = db.Column(db.String(512))
-    contact = db.relationship("Contact", backref="contact_type", lazy=True)
+    contact = db.relationship("Contact", backref="contacttype", lazy=True)
 
 
 # MuUser Domain Model Class
