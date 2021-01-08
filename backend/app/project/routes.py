@@ -1,16 +1,17 @@
 import uuid
 from flask import jsonify, request, abort
+from app import db
 from app.models import Project
 from . import project
 
 # update a project by id
 @project.route("/<uuid:id>/update", methods=["PUT"])
 def update_project(id):
-    data = request.form.to_dict(flat=True)
+    data = request.get_json(force=True)
     address = data.get("address")
     city = data.get("city")
     province = data.get("province")
-    postalCode = data.get("postalCode")
+    postal_code = data.get("postal_code")
     neighbourhood = data.get("neighbourhood")
     year = data.get("year")
     name = data.get("name")
@@ -35,8 +36,8 @@ def update_project(id):
     if province is not None:
         project.province = province
 
-    if postalCode is not None:
-        project.postalCode = postalCode
+    if postal_code is not None:
+        project.postal_code = postal_code
 
     if neighbourhood is not None:
         project.neighbourhood = neighbourhood
@@ -50,17 +51,9 @@ def update_project(id):
     if type is not None:
         project.type = type
 
-    if (
-            address == ""
-            and city == ""
-            and province == ""
-            and postalCode == ""
-            and neighbourhood == ""
-            and year is None
-            and name == ""
-            and type == ""
-        ):
-            abort(400, "No fields to update")
+
+    if not data:
+        abort(400, "No fields to update")
 
     db.session.add(project)
     db.session.commit()

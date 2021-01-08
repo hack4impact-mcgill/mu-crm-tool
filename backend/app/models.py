@@ -16,7 +16,7 @@ class Donation(db.Model):
     donation_source = db.Column(db.String(128), nullable=False)
     event = db.Column(db.String(128))
     num_tickets = db.Column(db.Integer)
-    added_by = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=True)
+    added_by = db.Column(UUID(as_uuid=True), db.ForeignKey("users.id"), nullable=True)
 
     @property
     def serialize(self):
@@ -57,14 +57,25 @@ contacts = db.Table(
     db.Column(
         "project_id",
         UUID(as_uuid=True),
-        db.ForeignKey("project.id"),
+        db.ForeignKey("projects.id"),
         primary_key=True,
         default=uuid.uuid4,
     ),
 )
+
+# Contact Model (filler to get test_basics to work, await model creation issue to be resolved)
+class Contact(db.Model):
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    contacttype_id = db.Column(
+            UUID(as_uuid=True),
+            db.ForeignKey("contacttypes.id"),
+            nullable=False
+    )
+
+    def __repr__(self):
+        return "<Contact %r>" % self.id
+
 # Project Model
-
-
 class Project(db.Model):
     __tablename__ = "projects"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -117,7 +128,7 @@ class ContactType(db.Model):
     hex_colour = db.Column(db.String(8))
     type = db.Column(db.String(64))
     description = db.Column(db.String(512))
-    contact = db.relationship("Contact", backref="contacttype", lazy=True)
+    contact = db.relationship("Contact", backref="contacttypes", lazy=True)
 
 
 # MuUser Domain Model Class
