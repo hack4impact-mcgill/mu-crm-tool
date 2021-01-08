@@ -25,7 +25,7 @@ def update_project(id):
 
     project = Project.query.filter_by(id=id).first()
     if project is None:
-        abort(400, "No project with specified ID")
+        abort(404, "No project with specified ID")
 
     if address is not None:
         project.address = address

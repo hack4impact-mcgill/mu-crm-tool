@@ -3,7 +3,7 @@ import unittest
 import uuid
 from flask import current_app
 from app import create_app, db
-from app.models import Contact, Project
+from app.models import Project
 
 
 class ProjectTestCase(unittest.TestCase):
@@ -63,3 +63,11 @@ class ProjectTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         json_response = json.loads(response.get_data(as_text=True))
         self.assertDictContainsSubset(update_obj, json_response)
+
+        # update a project that does not exist
+        response = self.client.put(
+            "/project/{}/update".format(uuid.uuid4()),
+            content_type="application/json",
+            data=json.dumps(update_obj),
+        )
+        self.assertEqual(response.status_code, 404)
