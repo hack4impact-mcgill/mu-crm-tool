@@ -1,6 +1,7 @@
 import uuid
 from flask import jsonify, request, abort
 from app.models import Project
+from . import project
 
 # update a project by id
 @project.route("/<uuid:id>/update", methods=["PUT"])
