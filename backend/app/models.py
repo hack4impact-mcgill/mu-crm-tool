@@ -141,11 +141,11 @@ class Contact(db.Model):
     contact_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4())
     name = db.Column(db.String(256), nullable=False)
     email = db.Column(db.String(256), nullable=False)
-    secondaryEmail = db.Column(db.String(256), nullable=False)
+    secondary_email = db.Column(db.String(256))
     cellphone = db.Column(db.String(256), nullable=False)
-    role = db.Column(db.String(256), nullable=False)
+    role = db.Column(db.String(256))
     organization = db.Column(db.String(256), nullable=False)
-    neighbourhood = db.Column(db.String(256), nullable=False)
+    neighbourhood = db.Column(db.String(256))
     projects = db.relationship(
         "Project",
         secondary=projects,
