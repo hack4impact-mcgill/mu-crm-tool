@@ -129,6 +129,14 @@ class ContactType(db.Model):
     description = db.Column(db.String(512))
     contact = db.relationship("Contact", backref="contacttype", lazy=True)
 
+    @property
+    def serialize(self):
+        return {
+            "id": self.id,
+            "hex_colour": self.hex_colour,
+            "type": self.type,
+            "description": self.description
+        }
 
 # MuUser Domain Model Class
 class MuUser(db.Model):
