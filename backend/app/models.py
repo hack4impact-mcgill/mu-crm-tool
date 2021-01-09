@@ -202,15 +202,15 @@ class Contact(db.Model):
     def serialize(self):
         return {
             "id": self.contact_id,
-                "name": self.name,
-                "email": self.email,
-                "secondary_email": self.secondary_email,
-                "cellphone": self.cellphone,
-                "role": self.role,
-                "organization": self.organization,
-                "neighbourhood": self.neighbourhood,
-                "projects": self.projects,
-                "contact_type": self.contact_type
+            "name": self.name,
+            "email": self.email,
+            "secondary_email": self.secondary_email,
+            "cellphone": self.cellphone,
+            "role": self.role,
+            "organization": self.organization,
+            "neighbourhood": self.neighbourhood,
+            "projects": self.projects,
+            "contact_type": self.contact_type
         }
 
     @staticmethod
@@ -223,7 +223,7 @@ class Contact(db.Model):
     def __repr__(self):
         return "<Contact %r>" % self.contact_id
 
-
+    
 # helper table as required for many to many relationships
 projects = db.Table(
     "projects",
