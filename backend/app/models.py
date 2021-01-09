@@ -197,7 +197,7 @@ class Contact(db.Model):
     contact_type = db.Column(
         UUID(as_uuid=True), db.ForeignKey("contact_type.id"), nullable=False
     )
-    
+
     @property
     def serialize(self):
         return {
@@ -210,7 +210,7 @@ class Contact(db.Model):
             "organization": self.organization,
             "neighbourhood": self.neighbourhood,
             "projects": self.projects,
-            "contact_type": self.contact_type
+            "contact_type": self.contact_type,
         }
 
     @staticmethod
@@ -223,7 +223,7 @@ class Contact(db.Model):
     def __repr__(self):
         return "<Contact %r>" % self.contact_id
 
-    
+
 # helper table as required for many to many relationships
 projects = db.Table(
     "projects",
