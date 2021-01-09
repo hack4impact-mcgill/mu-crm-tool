@@ -63,17 +63,6 @@ contacts = db.Table(
     ),
 )
 
-# Contact Model (filler to get tests to work, await model definition issue to be resolved)
-class Contact(db.Model):
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    contacttype_id = db.Column(
-        UUID(as_uuid=True), db.ForeignKey("contacttypes.id"), nullable=False
-    )
-
-    def __repr__(self):
-        return "<Contact %r>" % self.id
-
-
 # Project Model
 class Project(db.Model):
     __tablename__ = "projects"
