@@ -45,4 +45,8 @@ def create_app(config_name):
 
     app.register_blueprint(mu_user_blueprint, url_prefix="/mu_user")
 
+    from .project import project as project_blueprint
+
+    app.register_blueprint(project_blueprint, url_prefix="/project")
+
     return app
