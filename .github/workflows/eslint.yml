@@ -1,0 +1,6 @@
+name: ESLint
+on: [pull_request]
+
+jobs:
+  lint:
+    uses: stefanoeb/eslint-action@1.0.2
