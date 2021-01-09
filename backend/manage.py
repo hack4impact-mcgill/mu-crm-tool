@@ -21,6 +21,7 @@ manager.add_option("-c", "--config", dest="config_name", required=False)
 
 manager.add_command("db", MigrateCommand)
 
+
 @manager.command
 def test():
     """Run the unit tests."""

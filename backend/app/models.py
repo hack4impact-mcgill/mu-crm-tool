@@ -136,6 +136,7 @@ class Contact(db.Model):
             "neighbourhood": self.neighbourhood,
         }
 
+
 # Contact Type Model
 class ContactType(db.Model):
     __tablename__ = "contact_types"
@@ -190,4 +191,3 @@ class MuUser(db.Model):
 
     def __repr__(self):
         return "<User %r>" % self.email
-
