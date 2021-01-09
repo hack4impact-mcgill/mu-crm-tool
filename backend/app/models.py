@@ -200,7 +200,8 @@ class Contact(db.Model):
     
     @property
     def serialize(self):
-        return {"id": self.contact_id,
+        return {
+            "id": self.contact_id,
                 "name": self.name,
                 "email": self.email,
                 "secondary_email": self.secondary_email,
@@ -209,7 +210,8 @@ class Contact(db.Model):
                 "organization": self.organization,
                 "neighbourhood": self.neighbourhood,
                 "projects": self.projects,
-                "contact_type": self.contact_type}
+                "contact_type": self.contact_type
+        }
 
     @staticmethod
     def serialize(contacts):
@@ -232,6 +234,3 @@ projects = db.Table(
         "contact_id", UUID(as_uuid=True), db.ForeignKey("contact.id"), primary_key=True
     ),
 )
-
-
-
