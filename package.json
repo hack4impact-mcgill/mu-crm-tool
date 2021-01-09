@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.3",
@@ -44,5 +44,13 @@
   "main": "index.js",
   "devDependencies": {},
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hack4impact-mcgill/mu-crm-tool.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hack4impact-mcgill/mu-crm-tool/issues"
+  },
+  "homepage": "https://github.com/hack4impact-mcgill/mu-crm-tool#readme"
 }
