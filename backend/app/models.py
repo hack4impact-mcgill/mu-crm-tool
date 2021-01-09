@@ -135,8 +135,9 @@ class ContactType(db.Model):
             "id": self.id,
             "hex_colour": self.hex_colour,
             "type": self.type,
-            "description": self.description
+            "description": self.description,
         }
+
 
 # MuUser Domain Model Class
 class MuUser(db.Model):

@@ -5,8 +5,8 @@ from flask import current_app
 from app import create_app, db
 from app.models import ContactType
 
-class ContactTypeTestCase(unittest.TestCase):
 
+class ContactTypeTestCase(unittest.TestCase):
     def setUp(self):
         self.app = create_app("testing")
         self.app_context = self.app.app_context()
@@ -25,19 +25,15 @@ class ContactTypeTestCase(unittest.TestCase):
             id=ct_id,
             hex_colour="#ffffff",
             type="dummy type",
-            description="dummy description"
+            description="dummy description",
         )
         db.session.add(ct)
         db.session.commit()
 
         # deleting a contact_type that exists
-        response = self.client.delete(
-                "/contact_type/{}".format(ct_id))
+        response = self.client.delete("/contact_type/{}".format(ct_id))
         self.assertEqual(response.status_code, 200)
 
         # deleting a contact_type that does not exist
-        response = self.client.delete(
-                "/contact_type/{}".format(ct_id))
+        response = self.client.delete("/contact_type/{}".format(ct_id))
         self.assertEqual(response.status_code, 404)
-
-
