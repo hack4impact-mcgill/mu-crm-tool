@@ -174,3 +174,38 @@ class MuUser(db.Model):
 
     def __repr__(self):
         return "<User %r>" % self.email
+
+
+# Contact Model
+class Contact(db.Model):
+    __tablename__ = "contacts"
+    contact_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4())
+    name = db.Column(db.String(256), nullable=False)
+    email = db.Column(db.String(256), nullable=False)
+    secondary_email = db.Column(db.String(256))
+    cellphone = db.Column(db.String(256), nullable=False)
+    role = db.Column(db.String(256))
+    organization = db.Column(db.String(256), nullable=False)
+    neighbourhood = db.Column(db.String(256))
+    projects = db.relationship(
+        "Project",
+        secondary=projects,
+        lazy="subquery",
+        backref=db.backref("contacts", lazy=True),
+    )
+    # many to one realtionship with contact_type
+    contact_type = db.Column(
+        UUID(as_uuid=True), db.ForeignKey("contact_type.id"), nullable=False
+    )
+
+
+# helper table as required for many to many relationships
+projects = db.Table(
+    "projects",
+    db.Column(
+        "project_id", UUID(as_uuid=True), db.ForeignKey("project.id"), primary_key=True
+    ),
+    db.Column(
+        "contact_id", UUID(as_uuid=True), db.ForeignKey("contact.id"), primary_key=True
+    ),
+)
