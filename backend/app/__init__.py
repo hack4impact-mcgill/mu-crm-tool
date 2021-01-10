@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -17,6 +18,9 @@ def create_app(config_name):
             r"/*": {"origins": [r"http://localhost:*", r"http://192.168.0.11:*"]}
         },
     )
+    if config_name is None:
+        config_name = os.getenv("FLASK_CONFIG") or "default"
+
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
@@ -45,9 +49,9 @@ def create_app(config_name):
 
     app.register_blueprint(mu_user_blueprint, url_prefix="/mu_user")
 
-    from .note import note as note_blueprint
+    from .project import project as project_blueprint
 
-    app.register_blueprint(note_blueprint, url_prefix="/note")
+    app.register_blueprint(project_blueprint, url_prefix="/project")
 
     from .project import project as project_blueprint
 
