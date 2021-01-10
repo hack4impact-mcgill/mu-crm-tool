@@ -55,3 +55,16 @@ def edit_contact(id):
     db.session.commit()
 
     return jsonify(contact.serialize)
+
+
+# Get all projects for a specified id (Issue #15)
+@contact.route("/<uuid:id>/", methods=["GET"])
+def get_all_projects(id):
+    contact = Contact.query.filter_by(id=id).first()
+    if contact is None:
+        abort(404, "No contact found with specified id")
+
+    # might just be overthinking this but this is the correct way to retrieve
+    # the data correct
+    data = contact.serialize
+    return data["projects"]
