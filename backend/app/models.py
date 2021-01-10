@@ -136,6 +136,16 @@ class Contact(db.Model):
             "neighbourhood": self.neighbourhood,
         }
 
+    @staticmethod
+    def serialize_list(contacts):
+        json_contacts = []
+        for c in contacts:
+            json_contacts.append(c.serialize)
+        return json_contacts
+
+    def __repr__(self):
+        return "<Contact %r>" % self.id
+
 
 # Contact Type Model
 class ContactType(db.Model):
