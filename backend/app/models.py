@@ -45,8 +45,8 @@ class Donation(db.Model):
 
 # Many-to-Many relationships requires helper table
 # According to the flask documentation
-contacts = db.Table(
-    "contacts",
+association = db.Table(
+    "association",
     db.Column(
         "contact_id",
         UUID(as_uuid=True),
@@ -77,7 +77,7 @@ class Project(db.Model):
     type = db.Column(db.String(64))
     contacts = db.relationship(
         "Contact",
-        secondary=contacts,
+        secondary=association,
         lazy="subquery",
         backref=db.backref("project", lazy=True),
     )
