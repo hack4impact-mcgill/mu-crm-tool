@@ -19,6 +19,8 @@ jobs:
       - run: npm ci # or yarn install
       - uses: wearerequired/lint-action@v1
         with:
+          eslintArgs: '--ignore-path .gitignore --quiet'
+          extensions: 'js, jsx, ts, tsx'
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # Enable linters
           eslint: true
