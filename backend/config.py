@@ -7,7 +7,6 @@ class Config:
     APP_NAME = "MU CRM"
     SECRET_KEY = os.environ.get("SECRET_KEY") or "hard to guess string"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_ENGINE_OPTIONS = {"pool_pre_ping": True}
 
     @staticmethod
     def init_app(app):
