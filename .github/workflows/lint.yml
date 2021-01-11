@@ -17,10 +17,11 @@ jobs:
         with:
           node-version: '14'
       - run: npm ci # or yarn install
-      - uses: wearerequired/lint-action@v1
+      - uses: sibiraj-s/action-eslint@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          # Enable linters
-          eslint: true
+          eslintArgs: '--ignore-path .gitignore --quiet'
+          extensions: 'js, jsx, ts, tsx'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
           
           
