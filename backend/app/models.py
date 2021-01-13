@@ -45,8 +45,8 @@ class Donation(db.Model):
 
 # Many-to-Many relationships requires helper table
 # According to the flask documentation
-contacts = db.Table(
-    "contacts",
+association = db.Table(
+    "association",
     db.Column(
         "contact_id",
         UUID(as_uuid=True),
@@ -63,17 +63,6 @@ contacts = db.Table(
     ),
 )
 
-# Contact Model (filler to get tests to work, await model definition issue to be resolved)
-class Contact(db.Model):
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    contacttype_id = db.Column(
-        UUID(as_uuid=True), db.ForeignKey("contacttypes.id"), nullable=False
-    )
-
-    def __repr__(self):
-        return "<Contact %r>" % self.id
-
-
 # Project Model
 class Project(db.Model):
     __tablename__ = "projects"
@@ -88,7 +77,7 @@ class Project(db.Model):
     type = db.Column(db.String(64))
     contacts = db.relationship(
         "Contact",
-        secondary=contacts,
+        secondary=association,
         lazy="subquery",
         backref=db.backref("project", lazy=True),
     )
@@ -120,14 +109,52 @@ class Project(db.Model):
         return "<Project %r>" % self.id
 
 
+# Contact Model
+class Contact(db.Model):
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4())
+    name = db.Column(db.String(256), nullable=False)
+    email = db.Column(db.String(256), nullable=False)
+    secondary_email = db.Column(db.String(256))
+    cellphone = db.Column(db.String(256), nullable=False)
+    role = db.Column(db.String(256))
+    organization = db.Column(db.String(256), nullable=False)
+    neighbourhood = db.Column(db.String(256))
+    # many to one realtionship with contact_type
+    contact_type = db.Column(
+        UUID(as_uuid=True), db.ForeignKey("contact_types.id"), nullable=False
+    )
+
+    @property
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            "secondary_email": self.secondary_email,
+            "cellphone": self.cellphone,
+            "organization": self.organization,
+            "neighbourhood": self.neighbourhood,
+        }
+
+    @staticmethod
+    def serialize_list(contacts):
+        json_contacts = []
+        for c in contacts:
+            json_contacts.append(c.serialize)
+        return json_contacts
+
+    def __repr__(self):
+        return "<Contact %r>" % self.id
+
+
 # Contact Type Model
 class ContactType(db.Model):
-    __tablename__ = "contacttypes"
+    __tablename__ = "contact_types"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     hex_colour = db.Column(db.String(8))
     type = db.Column(db.String(64))
     description = db.Column(db.String(512))
-    contact = db.relationship("Contact", backref="contacttype", lazy=True)
+    contact = db.relationship("Contact", backref="contact_types", lazy=True)
 
     @property
     def serialize(self):
@@ -174,38 +201,3 @@ class MuUser(db.Model):
 
     def __repr__(self):
         return "<User %r>" % self.email
-
-
-# Contact Model
-class Contact(db.Model):
-    __tablename__ = "contacts"
-    contact_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4())
-    name = db.Column(db.String(256), nullable=False)
-    email = db.Column(db.String(256), nullable=False)
-    secondary_email = db.Column(db.String(256))
-    cellphone = db.Column(db.String(256), nullable=False)
-    role = db.Column(db.String(256))
-    organization = db.Column(db.String(256), nullable=False)
-    neighbourhood = db.Column(db.String(256))
-    projects = db.relationship(
-        "Project",
-        secondary=projects,
-        lazy="subquery",
-        backref=db.backref("contacts", lazy=True),
-    )
-    # many to one realtionship with contact_type
-    contact_type = db.Column(
-        UUID(as_uuid=True), db.ForeignKey("contact_type.id"), nullable=False
-    )
-
-
-# helper table as required for many to many relationships
-projects = db.Table(
-    "projects",
-    db.Column(
-        "project_id", UUID(as_uuid=True), db.ForeignKey("project.id"), primary_key=True
-    ),
-    db.Column(
-        "contact_id", UUID(as_uuid=True), db.ForeignKey("contact.id"), primary_key=True
-    ),
-)
