@@ -1,4 +1,4 @@
-from flask import jsonify, request, query
+from flask import jsonify, request, abort, query
 import uuid
 from app import db
 from app.models import Contact
