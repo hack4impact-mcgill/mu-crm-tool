@@ -7,7 +7,6 @@ from . import contact
 
 @contact.route("", methods=["POST"])
 def create_contact():
-    #
     data = request.get_json(force=True)
     Name = data.get("name")
     Email = data.get("email")
@@ -43,6 +42,7 @@ def create_contact():
     )
 
     db.session.add(new_contact)
+    db.session.commit()
 
 
 @contact.route("/<uuid:id>/edit", methods=["PUT"])
@@ -51,7 +51,7 @@ def edit_contact(id):
     if contact is None:
         abort(404, "No contact found with specified id")
 
-    db.session.delete(contact)
+    db.session.edit(contact)
     db.session.commit()
 
     return jsonify(contact.serialize)
