@@ -8,8 +8,8 @@ import uuid
 # get all endpoints
 @project.route("", methods=["GET"])
 def get_projects():
-    projects = project.query.all()
-    return jsonify(project.serialize_list(projects))
+    projects = Project.query.all()
+    return jsonify(Project.serialize_list(projects))
 
 
 # update a project by id
