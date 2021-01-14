@@ -19,7 +19,7 @@ class ProjectTestCase(unittest.TestCase):
         db.drop_all()
         self.app_context.pop()
 
-    def test_project_routes(self):
+    def test_update_project(self):
         p_id = uuid.uuid4()
         p = Project(
             id=p_id,
