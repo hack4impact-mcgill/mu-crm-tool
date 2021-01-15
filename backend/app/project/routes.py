@@ -1,8 +1,16 @@
-import uuid
-from flask import jsonify, request, abort
+from flask import Flask, jsonify, request, abort
 from app import db
-from app.models import Project
 from . import project
+from app.models import Project
+import uuid
+
+
+# get all endpoints
+@project.route("", methods=["GET"])
+def get_projects():
+    projects = Project.query.all()
+    return jsonify(Project.serialize_list(projects))
+
 
 # create a new project
 @project.route("", methods=["POST"])
@@ -35,6 +43,8 @@ def create_project():
     return jsonify(new_project.serialize)
 
 # update a project by id
+
+
 @project.route("/<uuid:id>/update", methods=["PUT"])
 def update_project(id):
     data = request.get_json(force=True)

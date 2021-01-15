@@ -1,7 +1,7 @@
 import json
 import unittest
 import uuid
-from flask import current_app
+from flask import current_app, request
 from app import create_app, db
 from app.models import Project
 
@@ -19,7 +19,7 @@ class ProjectTestCase(unittest.TestCase):
         db.drop_all()
         self.app_context.pop()
 
-    def test_project_routes(self):
+    def test_update_project(self):
         p_id = uuid.uuid4()
         p = Project(
             id=p_id,
@@ -71,3 +71,46 @@ class ProjectTestCase(unittest.TestCase):
             data=json.dumps(update_obj),
         )
         self.assertEqual(response.status_code, 404)
+
+    # test get_projects endpoint
+    def test_get_project(self):
+        # pre-populate database
+        p_id = uuid.uuid4()
+        p = Project(
+            id=p_id,
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
+            type="dummy type",
+            contacts=[],
+        )
+        db.session.add(p)
+        db.session.commit()
+
+        p2_id = uuid.uuid4()
+        p2 = Project(
+            id=p2_id,
+            address="dummy address 2",
+            city="dummy city 2",
+            province="dummy province 2",
+            postal_code="dummy postal_code 2",
+            neighbourhood="dummy neighbourhood 2",
+            year=2020,
+            name="dummy name 2",
+            type="dummy type 2",
+            contacts=[],
+        )
+        db.session.add(p2)
+        db.session.commit()
+
+        # get all projects
+        response = self.client.get("/project")
+        json_data = response.get_json()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(json_data), 2)
+        self.assertEqual(json_data[0]["address"], "dummy address")
+        self.assertEqual(json_data[1]["year"], 2020)
