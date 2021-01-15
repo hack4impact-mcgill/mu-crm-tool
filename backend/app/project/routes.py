@@ -37,11 +37,8 @@ def create_project():
         or year is None
         or name == ""
         or type == ""
-
         # commented the below one out because it would break unittest
-
         # or len(contacts) == 0
-
         #
     ):
         abort(400, "Cannot have empty fields for a new project")
@@ -55,7 +52,7 @@ def create_project():
         year=year,
         name=name,
         type=type,
-        contacts=contacts
+        contacts=contacts,
     )
 
     db.session.add(new_project)
