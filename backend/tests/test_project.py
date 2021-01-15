@@ -114,3 +114,49 @@ class ProjectTestCase(unittest.TestCase):
         self.assertEqual(len(json_data), 2)
         self.assertEqual(json_data[0]["address"], "dummy address")
         self.assertEqual(json_data[1]["year"], 2020)
+
+    def test_create_project(self):
+        response = self.client.post(
+            "/project",
+            json={
+                "address": "dummy address 2",
+                "city": "dummy city 2",
+                "province": "dummy province 2",
+                "postal_code": "dummy postal_code 2",
+                "neighbourhood": "dummy neighbourhood 2",
+                "year": 2020,
+                "name": "dummy name 2",
+                "type": "dummy type 2",
+                "contacts": [],
+            }
+        )
+        response2 = self.client.post(
+            "/project",
+            json={
+                "address": "dummy address",
+                "city": "dummy city",
+                "province": "dummy province",
+                "postal_code": "dummy postal_code",
+                "neighbourhood": "dummy neighbourhood",
+                "year": 2020,
+                "name": "dummy name",
+                "type": "dummy type",
+                "contacts": [],
+            })
+
+        empty_response = self.client.post(
+            "/project",
+            json={"address": ""}
+        )
+
+        # test posted correctly
+        self.assertEqual(empty_response.status_code, 400)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response2.status_code, 200)
+
+        returned_json = self.client.get("/project")
+        json_data = returned_json.get_json()
+        self.assertEqual(len(json_data), 2)
+
+        # test two unique uuid genearted correctly
+        self.assertNotEqual(json_data[0]["id"], json_data[1]["id"])

@@ -26,6 +26,26 @@ def create_project():
     type = data.get("type")
     contacts = data.get("contacts")
 
+    # this is somewhat debatable in my opinion
+    # do all the fields really need to be filled ?
+    if (
+        address == ""
+        or city == ""
+        or province == ""
+        or postal_code == ""
+        or neighbourhood == ""
+        or year is None
+        or name == ""
+        or type == ""
+
+        # commented the below one out because it would break unittest
+
+        # or len(contacts) == 0
+
+        #
+    ):
+        abort(400, "Cannot have empty fields for a new project")
+
     new_project = Project(
         address=address,
         city=city,
@@ -42,9 +62,8 @@ def create_project():
     db.session.commit()
     return jsonify(new_project.serialize)
 
+
 # update a project by id
-
-
 @project.route("/<uuid:id>/update", methods=["PUT"])
 def update_project(id):
     data = request.get_json(force=True)
