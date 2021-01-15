@@ -16,8 +16,6 @@ def create_project():
     year = data.get("year")
     name = data.get("name")
     type = data.get("type")
-
-    # contacts can be empty ?
     contacts = data.get("contacts")
 
     new_project = Project(

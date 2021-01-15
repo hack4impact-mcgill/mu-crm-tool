@@ -7,6 +7,8 @@ import datetime
 # create model classes here
 
 # Donation Model
+
+
 class Donation(db.Model):
     __tablename__ = "donations"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -16,7 +18,8 @@ class Donation(db.Model):
     donation_source = db.Column(db.String(128), nullable=False)
     event = db.Column(db.String(128))
     num_tickets = db.Column(db.Integer)
-    added_by = db.Column(UUID(as_uuid=True), db.ForeignKey("users.id"), nullable=True)
+    added_by = db.Column(UUID(as_uuid=True),
+                         db.ForeignKey("users.id"), nullable=True)
 
     @property
     def serialize(self):
@@ -64,6 +67,8 @@ association = db.Table(
 )
 
 # Project Model
+
+
 class Project(db.Model):
     __tablename__ = "projects"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
