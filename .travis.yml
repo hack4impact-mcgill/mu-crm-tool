@@ -3,8 +3,8 @@ python:
     - 3.7
 services:
     - docker
-install: pip install -r backend/requirements.txt
-before_script:
+before_install:
     - docker-compose up -d
     - cd backend
+install: pip install -r requirements.txt
 script: python manage.py test
