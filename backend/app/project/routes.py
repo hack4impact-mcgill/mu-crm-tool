@@ -1,8 +1,7 @@
-from flask import Flask, jsonify, request, abort
+from flask import jsonify, request, abort
 from app import db
 from . import project
 from app.models import Project
-import uuid
 
 
 # get all endpoints
