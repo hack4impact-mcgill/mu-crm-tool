@@ -145,7 +145,16 @@ class ProjectTestCase(unittest.TestCase):
             },
         )
 
-        empty_response = self.client.post("/project", json={"address": ""})
+        empty_response = self.client.post("/project", json={
+            "address": "",
+            "city": "",
+            "province": "",
+            "postal_code": "",
+            "neighbourhood": "",
+            "year": None,
+            "name": "",
+            "type": "",
+            "contacts": [], })
 
         # test posted correctly
         self.assertEqual(empty_response.status_code, 400)

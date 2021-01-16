@@ -1,8 +1,7 @@
-from flask import Flask, jsonify, request, abort
+from flask import jsonify, request, abort
 from app import db
 from . import project
 from app.models import Project
-import uuid
 
 
 # get all endpoints
@@ -26,22 +25,19 @@ def create_project():
     type = data.get("type")
     contacts = data.get("contacts")
 
-    # this is somewhat debatable in my opinion
-    # do all the fields really need to be filled ?
+    # check if all fields are empty, if so it's a garbage post
     if (
         address == ""
-        or city == ""
-        or province == ""
-        or postal_code == ""
-        or neighbourhood == ""
-        or year is None
-        or name == ""
-        or type == ""
-        # commented the below one out because it would break unittest
-        # or len(contacts) == 0
-        #
+        and city == ""
+        and province == ""
+        and postal_code == ""
+        and neighbourhood == ""
+        and year is None
+        and name == ""
+        and type == ""
+        and len(contacts) == 0
     ):
-        abort(400, "Cannot have empty fields for a new project")
+        abort(400, "Cannot have all empty fields for a new project")
 
     new_project = Project(
         address=address,
