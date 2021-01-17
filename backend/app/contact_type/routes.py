@@ -34,11 +34,35 @@ def create_contact_type():
 # edit a contact_type by id
 @contact_type.route("/<uuid:id>", methods=["PUT"])
 def edit_contact_type(id):
+    data = request.get_json(force=True)
+    id = int(data.get("id"))
+    hex_colour = data.get("email")
+    type = data.get("type")
+    description = data.get("description")
+    
     contact_type = ContactType.query.filter_by(id=id).first()
     if contact_type is None:
         abort(404, "No contact type found with specified ID.")
-    db.session.edit(contact_type)
+
+    if id is not None:
+        contact_type.id = id
+
+    if hex_colour is not None:
+        contact_type.hex_colour = hex_colour
+    
+    if type is not None:
+        contact_type.type = type
+    
+    if description is not None:
+        contact_type.description = description
+
+    if not data:
+        abort(400, "No fields to update.")
+        
+    db.add(contact_type)
     db.session.commit()
+
+    return jsonify(contact_type.serialize)
     
 # delete a contact_type by id
 @contact_type.route("/<uuid:id>", methods=["DELETE"])
