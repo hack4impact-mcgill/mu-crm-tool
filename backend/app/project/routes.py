@@ -48,7 +48,8 @@ def create_project():
         year=year,
         name=name,
         type=type,
-        contacts=contacts,
+        # line below dependent on the contact endpoints
+        # contacts=contacts,
     )
 
     db.session.add(new_project)
