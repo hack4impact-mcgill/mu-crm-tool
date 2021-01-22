@@ -154,7 +154,7 @@ class ProjectTestCase(unittest.TestCase):
             "year": 2020,
             "name": "dummy name",
             "type": test_list[1],
-            "contacts": []
+            "contacts": [],
         }
         # test empty type param
         response = self.client.get("/project/")

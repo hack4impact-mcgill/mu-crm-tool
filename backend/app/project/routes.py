@@ -11,6 +11,7 @@ def get_all_project_types():
         types.append(project.type)
     return jsonify(types)
 
+
 # return projects with the specified type
 @project.route("/<type>", methods=["GET"])
 def get_projects_of_type(type):
@@ -21,6 +22,7 @@ def get_projects_of_type(type):
         for project in Project.query.filter(Project.type == type):
             projects.append(project)
         return jsonify(Project.serialize_list(projects))
+
 
 # update a project by id
 @project.route("/<uuid:id>/update", methods=["PUT"])
