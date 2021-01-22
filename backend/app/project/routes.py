@@ -23,7 +23,6 @@ def create_project():
     year = data.get("year")
     name = data.get("name")
     type = data.get("type")
-    contacts = data.get("contacts")
 
     # check if all fields are empty, if so it's a garbage post
     if (
@@ -35,7 +34,6 @@ def create_project():
         and year is None
         and name == ""
         and type == ""
-        and len(contacts) == 0
     ):
         abort(400, "Cannot have all empty fields for a new project")
 
@@ -47,9 +45,7 @@ def create_project():
         neighbourhood=neighbourhood,
         year=year,
         name=name,
-        type=type,
-        # line below dependent on the contact endpoints
-        # contacts=contacts,
+        type=type
     )
 
     db.session.add(new_project)

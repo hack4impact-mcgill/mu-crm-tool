@@ -127,7 +127,6 @@ class ProjectTestCase(unittest.TestCase):
                 "year": 2020,
                 "name": "dummy name 2",
                 "type": "dummy type 2",
-                "contacts": [],
             },
         )
         response2 = self.client.post(
@@ -141,7 +140,6 @@ class ProjectTestCase(unittest.TestCase):
                 "year": 2020,
                 "name": "dummy name",
                 "type": "dummy type",
-                "contacts": [],
             },
         )
 
@@ -153,8 +151,8 @@ class ProjectTestCase(unittest.TestCase):
             "neighbourhood": "",
             "year": None,
             "name": "",
-            "type": "",
-            "contacts": [], })
+            "type": ""
+        })
 
         # test posted correctly
         self.assertEqual(empty_response.status_code, 400)
