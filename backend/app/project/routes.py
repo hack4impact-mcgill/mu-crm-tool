@@ -45,7 +45,7 @@ def create_project():
         neighbourhood=neighbourhood,
         year=year,
         name=name,
-        type=type
+        type=type,
     )
 
     db.session.add(new_project)
