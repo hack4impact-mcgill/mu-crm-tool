@@ -4,6 +4,16 @@ from app import db
 from app.models import Project
 from . import project
 
+# get a project by id
+@project.route("/<uuid:id>", methods=["GET"])
+def get_project_by_id(id):
+    project = Project.query.filter_by(id=id).first()
+    if project is None:
+        abort(404, "No project found with specified ID.")
+
+    return jsonify(project.serialize)
+
+
 # update a project by id
 @project.route("/<uuid:id>/update", methods=["PUT"])
 def update_project(id):

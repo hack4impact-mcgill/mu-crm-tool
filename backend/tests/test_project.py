@@ -3,7 +3,7 @@ import unittest
 import uuid
 from flask import current_app
 from app import create_app, db
-from app.models import Project
+from app.models import Project, Contact, ContactType
 
 
 class ProjectTestCase(unittest.TestCase):
@@ -71,3 +71,49 @@ class ProjectTestCase(unittest.TestCase):
             data=json.dumps(update_obj),
         )
         self.assertEqual(response.status_code, 404)
+
+    def test_get_project_by_id(self):
+        p_id = uuid.uuid4()
+
+        # get a project with an id that does not exist
+        response = self.client.get("/project/{}".format(p_id))
+        self.assertEqual(response.status_code, 404)
+
+        c_id = uuid.uuid4()
+        c = Contact(
+            id=c_id,
+            name="dummy name",
+            email="dummy email",
+            cellphone="dummy cellphone",
+            role="dummy role",
+            organization="dummy organization",
+            neighbourhood="dummy neighbourhood",
+        )
+        ct_id = uuid.uuid4()
+        ct = ContactType(
+            id=ct_id,
+            hex_colour="#fffffff",
+            type="dummy type",
+            description="dummy description",
+            contacts=[c],
+        )
+        p = Project(
+            id=p_id,
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
+            type="dummy type",
+            contacts=[c],
+        )
+        db.session.add(p)
+        db.session.commit()
+
+        # get a project with an id that exists
+        response = self.client.get("/project/{}".format(p_id))
+        json_response = response.get_json()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json_response["id"], str(p_id))
