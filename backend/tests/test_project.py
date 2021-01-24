@@ -87,7 +87,7 @@ class ProjectTestCase(unittest.TestCase):
             cellphone="dummy cellphone",
             role="dummy role",
             organization="dummy organization",
-            neighbourhood="dummy neighbourhood"
+            neighbourhood="dummy neighbourhood",
         )
         ct_id = uuid.uuid4()
         ct = ContactType(
@@ -95,7 +95,7 @@ class ProjectTestCase(unittest.TestCase):
             hex_colour="#fffffff",
             type="dummy type",
             description="dummy description",
-            contacts=[c]
+            contacts=[c],
         )
         p = Project(
             id=p_id,
