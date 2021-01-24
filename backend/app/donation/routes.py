@@ -9,7 +9,7 @@ from datetime import datetime
 @donation.route("/donations/<user_uuid>", methods=["GET"])
 def get_denoations_for_user(user_uuid):
     # Look for all donations of "user_id"
-    donations = Donation.query.filter_by(addedBy=user_uuid).all()
+    donations = Donation.query.filter_by(added_by=user_uuid).all()
     return jsonify(Donation.serialize_list(donations))
 
 
@@ -24,22 +24,22 @@ def create_donation():
     # Load data to the corresponding variables
     name = data.get("name")
     email = data.get("email")
-    donationSource = data.get("donationSource")
+    donation_source = data.get("donation_source")
     event = data.get("event")
-    numTickets = data.get("numTickets")
-    addedBy = data.get("addedBy")
+    num_tickets = data.get("num_tickets")
+    added_by = data.get("added_by")
     # Check if nullable=False columns are empty
-    if name == "" or donationSource == "" or email == "":
-        abort(400, "Name, doantionSource, and email can not be empty")
+    if name == "" or donation_source == "" or email == "":
+        abort(400, "Name, doantion_source, and email can not be empty")
     new_donation = Donation(
         id=id,
         name=name,
         email=email,
         date=date,
-        donationSource=donationSource,
+        donation_source=donation_source,
         event=event,
-        numTickets=numTickets,
-        addedBy=addedBy,
+        num_tickets=num_tickets,
+        added_by=added_by,
     )
     db.session.add(new_donation)
     db.session.commit()
@@ -56,18 +56,18 @@ def update_donation(donation_uuid):
     name = data.get("name")
     email = data.get("email")
     date = data.get("date")
-    donationSource = data.get("donationSource")
+    donation_source = data.get("donation_source")
     event = data.get("event")
-    numTickets = data.get("numTickets")
-    addedBy = data.get("addedBy")
+    num_tickets = data.get("num_tickets")
+    added_by = data.get("added_by")
     if (
         name == ""
         and email == ""
         and date is None
-        and donationSource == ""
+        and donation_source == ""
         and event == ""
-        and numTickets is None
-        and addedBy == ""
+        and num_tickets is None
+        and added_by == ""
     ):
         abort(400, "No donation fields to update")
     if name:
@@ -76,14 +76,14 @@ def update_donation(donation_uuid):
         donation.email = email
     if date:
         donation.date = date
-    if donationSource:
-        donation.donationSource = donationSource
+    if donation_source:
+        donation.donation_source = donation_source
     if event:
         donation.event = event
-    if numTickets:
-        donation.numTickets = int(numTickets)
-    if addedBy:
-        donation.addedBy = addedBy
+    if num_tickets:
+        donation.num_tickets = int(num_tickets)
+    if added_by:
+        donation.added_by = added_by
     db.session.add(donation)
     db.session.commit()
     return jsonify(donation.serialize)
