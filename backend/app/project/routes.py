@@ -23,6 +23,7 @@ def get_projects_of_type(type):
             projects.append(project)
         return jsonify(Project.serialize_list(projects))
 
+
 # get a project by id
 @project.route("/id/<uuid:id>", methods=["GET"])
 def get_project_by_id(id):
