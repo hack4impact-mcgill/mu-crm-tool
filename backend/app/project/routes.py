@@ -4,7 +4,7 @@ from sqlalchemy import distinct
 from . import project
 
 # helper returns all project types;
-@project.route("/type/types", methods=["GET"])
+@project.route("/types", methods=["GET"])
 def get_all_project_types():
     types = []
     for project in Project.query.distinct(Project.type):
@@ -13,9 +13,10 @@ def get_all_project_types():
 
 
 # return projects with the specified type
-@project.route("/type/<type>", methods=["GET"])
-def get_projects_of_type(type):
-    if type is None:
+@project.route("", methods=["GET"])
+def get_projects_of_type():
+    type = request.args.get("type")
+    if type == "":
         abort(404, "Project type invalid")
     else:
         projects = []
@@ -25,7 +26,7 @@ def get_projects_of_type(type):
 
 
 # get a project by id
-@project.route("/id/<uuid:id>", methods=["GET"])
+@project.route("/<uuid:id>", methods=["GET"])
 def get_project_by_id(id):
     project = Project.query.filter_by(id=id).first()
     if project is None:
@@ -35,7 +36,7 @@ def get_project_by_id(id):
 
 
 # update a project by id
-@project.route("/id/<uuid:id>/update", methods=["PUT"])
+@project.route("/<uuid:id>/update", methods=["PUT"])
 def update_project(id):
     data = request.get_json(force=True)
     address = data.get("address")
