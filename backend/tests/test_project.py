@@ -96,8 +96,7 @@ class ProjectTestCase(unittest.TestCase):
             type=test_list[1],
             contacts=[],
         )
-        db.session.add(p1)
-        db.session.add(p2)
+        db.session.add_all([p1, p2])
         db.session.commit()
 
         response = self.client.get("/project/types")
@@ -140,9 +139,7 @@ class ProjectTestCase(unittest.TestCase):
             type=test_list[0],
             contacts=[],
         )
-        db.session.add(p1)
-        db.session.add(p2)
-        db.session.add(p3)
+        db.session.add_all([p1, p2, p3])
         db.session.commit()
 
         tester = {
@@ -173,7 +170,6 @@ class ProjectTestCase(unittest.TestCase):
 
         # get a project with an id that does not exist
         response = self.client.get("/project/{}".format(p_id))
-        json_response = response.get_json()
         self.assertEqual(response.status_code, 404)
 
         c_id = uuid.uuid4()

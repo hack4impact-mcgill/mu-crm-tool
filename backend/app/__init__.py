@@ -53,8 +53,4 @@ def create_app(config_name):
 
     app.register_blueprint(project_blueprint, url_prefix="/project")
 
-    from .project import project as project_blueprint
-
-    app.register_blueprint(project_blueprint, url_prefix="/project")
-
     return app
