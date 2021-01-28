@@ -1,6 +1,7 @@
-from flask import abort, jsonify, request
 from app.models import Project, db
-from sqlalchemy import distinct
+from flask import jsonify, request, abort
+from app import db
+from app.models import Project
 from . import project
 
 # helper returns all project types;
