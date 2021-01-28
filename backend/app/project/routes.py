@@ -1,4 +1,3 @@
-from app.models import Project, db
 from flask import jsonify, request, abort
 from app import db
 from app.models import Project
