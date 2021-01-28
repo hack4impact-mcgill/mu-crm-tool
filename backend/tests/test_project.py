@@ -192,8 +192,6 @@ class ProjectTestCase(unittest.TestCase):
         )
         p = Project(
             id=p_id,
-            type="dummy type",
-            contacts=[c],
             address="dummy address",
             city="dummy city",
             province="dummy province",
@@ -201,6 +199,8 @@ class ProjectTestCase(unittest.TestCase):
             neighbourhood="dummy neighbourhood",
             year=2020,
             name="dummy name",
+            type="dummy type",
+            contacts=[c],
         )
         db.session.add(p)
         db.session.commit()
