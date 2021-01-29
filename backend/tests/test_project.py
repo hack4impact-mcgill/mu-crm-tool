@@ -165,7 +165,7 @@ class ProjectTestCase(unittest.TestCase):
         json_response = json.loads(response3.get_data(as_text=True))
         self.assertEqual(len(json_response), 2)
 
-    # test get_projects endpoint
+    # test get_all_projects endpoint
     def test_get_all_projects(self):
         # pre-populate database
         p_id = uuid.uuid4()
