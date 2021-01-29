@@ -11,6 +11,38 @@ def get_projects():
     return jsonify(Project.serialize_list(projects))
 
 
+# helper returns all project types;
+@project.route("/types", methods=["GET"])
+def get_all_project_types():
+    types = []
+    for project in Project.query.distinct(Project.type):
+        types.append(project.type)
+    return jsonify(types)
+
+
+# return projects with the specified type
+@project.route("", methods=["GET"])
+def get_projects_of_type():
+    type = request.args.get("type")
+    if type == "":
+        abort(404, "Project type invalid")
+    else:
+        projects = []
+        for project in Project.query.filter(Project.type == type):
+            projects.append(project)
+        return jsonify(Project.serialize_list(projects))
+
+
+# get a project by id
+@project.route("/<uuid:id>", methods=["GET"])
+def get_project_by_id(id):
+    project = Project.query.filter_by(id=id).first()
+    if project is None:
+        abort(404, "No project found with specified ID.")
+
+    return jsonify(project.serialize)
+
+
 # update a project by id
 
 
