@@ -75,6 +75,13 @@ class ProjectTestCase(unittest.TestCase):
     def test_get_all_types(self):
         test_list = ["dummy type", "dummy type 2"]
         p1 = Project(
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
             type=test_list[0],
             contacts=[],
         )
