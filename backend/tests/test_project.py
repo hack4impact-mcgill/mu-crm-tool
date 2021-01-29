@@ -166,7 +166,7 @@ class ProjectTestCase(unittest.TestCase):
         self.assertEqual(len(json_response), 2)
 
     # test get_projects endpoint
-    def test_get_projects(self):
+    def test_get_all_projects(self):
         # pre-populate database
         p_id = uuid.uuid4()
         p = Project(
@@ -181,8 +181,6 @@ class ProjectTestCase(unittest.TestCase):
             type="dummy type",
             contacts=[],
         )
-        db.session.add(p)
-        db.session.commit()
 
         p2_id = uuid.uuid4()
         p2 = Project(
@@ -197,7 +195,7 @@ class ProjectTestCase(unittest.TestCase):
             type="dummy type 2",
             contacts=[],
         )
-        db.session.add(p2)
+        db.session.add_all([p, p2])
         db.session.commit()
 
         # get all projects
