@@ -1,8 +1,29 @@
-import uuid
 from flask import jsonify, request, abort
 from app import db
 from app.models import Project
 from . import project
+
+# helper returns all project types;
+@project.route("/types", methods=["GET"])
+def get_all_project_types():
+    types = []
+    for project in Project.query.distinct(Project.type):
+        types.append(project.type)
+    return jsonify(types)
+
+
+# return projects with the specified type
+@project.route("", methods=["GET"])
+def get_projects_of_type():
+    type = request.args.get("type")
+    if type == "":
+        abort(404, "Project type invalid")
+    else:
+        projects = []
+        for project in Project.query.filter(Project.type == type):
+            projects.append(project)
+        return jsonify(Project.serialize_list(projects))
+
 
 # get a project by id
 @project.route("/<uuid:id>", methods=["GET"])

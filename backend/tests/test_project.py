@@ -72,6 +72,99 @@ class ProjectTestCase(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 404)
 
+    def test_get_all_types(self):
+        test_list = ["dummy type", "dummy type 2"]
+        p1 = Project(
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
+            type=test_list[0],
+            contacts=[],
+        )
+        p2 = Project(
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
+            type=test_list[1],
+            contacts=[],
+        )
+        db.session.add_all([p1, p2])
+        db.session.commit()
+
+        response = self.client.get("/project/types")
+        self.assertEqual(response.status_code, 200)
+        json_response = json.loads(response.get_data(as_text=True))
+        self.assertEqual(json_response, test_list)
+
+    def test_get_specific_type(self):
+        test_list = ["dummy type", "dummy type 2"]
+        p1 = Project(
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
+            type=test_list[0],
+            contacts=[],
+        )
+        p2 = Project(
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
+            type=test_list[1],
+            contacts=[],
+        )
+        p3 = Project(
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
+            type=test_list[0],
+            contacts=[],
+        )
+        db.session.add_all([p1, p2, p3])
+        db.session.commit()
+
+        tester = {
+            "address": "dummy address",
+            "city": "dummy city",
+            "province": "dummy province",
+            "postal_code": "dummy postal_code",
+            "neighbourhood": "dummy neighbourhood",
+            "year": 2020,
+            "name": "dummy name",
+            "type": test_list[1],
+            "contacts": [],
+        }
+        # test empty type param
+        response = self.client.get("/project?type=")
+        self.assertEqual(response.status_code, 404)
+
+        response2 = self.client.get("/project?type={}".format(test_list[1]))
+        json_response = json.loads(response2.get_data(as_text=True))
+        self.assertDictContainsSubset(tester, json_response[0])
+
+        response3 = self.client.get("/project?type={}".format(test_list[0]))
+        json_response = json.loads(response3.get_data(as_text=True))
+        self.assertEqual(len(json_response), 2)
+
     def test_get_project_by_id(self):
         p_id = uuid.uuid4()
 
