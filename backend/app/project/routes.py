@@ -65,6 +65,7 @@ def get_all_project_types():
 # return projects with the specified type
 @project.route("", methods=["GET"])
 def get_projects_of_type():
+    print(type)
     type = request.args.get("type")
     if type == "":
         abort(404, "Project type invalid")
