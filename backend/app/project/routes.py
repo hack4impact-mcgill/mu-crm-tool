@@ -5,8 +5,8 @@ from app.models import Project
 
 
 # get all endpoints
-@project.route("", methods=["GET"])
-def get_projects():
+@project.route("/projects", methods=["GET"])
+def get_all_projects():
     projects = Project.query.all()
     return jsonify(Project.serialize_list(projects))
 
