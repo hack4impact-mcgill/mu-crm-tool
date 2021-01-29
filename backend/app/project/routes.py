@@ -1,7 +1,7 @@
 from flask import jsonify, request, abort
 from app import db
-from . import project
 from app.models import Project
+from . import project
 
 
 # get all endpoints
