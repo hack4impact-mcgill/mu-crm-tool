@@ -99,7 +99,7 @@ class Project(db.Model):
             "year": self.year,
             "name": self.name,
             "type": self.type,
-            "contacts": self.contacts,
+            "contacts": Contact.serialize_list(self.contacts),
         }
 
     @staticmethod
@@ -158,7 +158,7 @@ class ContactType(db.Model):
     hex_colour = db.Column(db.String(8))
     type = db.Column(db.String(64))
     description = db.Column(db.String(512))
-    contact = db.relationship("Contact", backref="contact_types", lazy=True)
+    contacts = db.relationship("Contact", backref="contact_types", lazy=True)
 
     @property
     def serialize(self):
