@@ -6,7 +6,6 @@ from app import create_app, db
 from app.models import Contact, ContactType
 
 
-
 class ContactTestCase(unittest.TestCase):
     def setUp(self):
         self.app = create_app("testing")
@@ -37,7 +36,7 @@ class ContactTestCase(unittest.TestCase):
             hex_colour="#fffffff",
             type="dummy type",
             description="dummy description",
-            contacts=[c]
+            contacts=[c],
         )
         db.session.add(ct)
         db.session.commit()
