@@ -41,9 +41,17 @@ class ContactTestCase(unittest.TestCase):
         db.session.add(ct)
         db.session.commit()
 
+        # Ensuring contact is added for contact_type
+        contact_type = ContactType.query.filter_by(id=ct_id).first()
+        self.assertEqual(len(contact_type.contacts), 1)
+
         # deleting a contact that exists
         response = self.client.delete("/contact/{}".format(c_id))
         self.assertEqual(response.status_code, 200)
+
+        # Ensuring contact is removed for contact_type
+        contact_type = ContactType.query.filter_by(id=ct_id).first()
+        self.assertEqual(len(contact_type.contacts), 0)
 
         # deleting a contact that does not exist
         response = self.client.delete("/contact/{}".format(c_id))
