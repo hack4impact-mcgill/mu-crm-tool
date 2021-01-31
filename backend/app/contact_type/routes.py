@@ -32,7 +32,7 @@ def create_contact_type():
     db.session.commit()
 
 # edit a contact_type by id
-@contact_type.route("/<uuid:id>", methods=["PUT"])
+@contact_type.route("/edit/<uuid:id>", methods=["PUT"])
 def edit_contact_type(id):
     data = request.get_json(force=True)
     id = int(data.get("id"))
