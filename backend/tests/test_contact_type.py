@@ -40,7 +40,7 @@ class ContactTypeTestCase(unittest.TestCase):
 
     def test_create_contact_type_route(self):
         # creating a contact_type with valid arguments
-        valid_response = self.client.post("/content_type",
+        valid_response = self.client.post("/contact_type",
             json={
                 "hex_colour": "#F0F8FF",
                 "type": "dummy type",
@@ -49,9 +49,8 @@ class ContactTypeTestCase(unittest.TestCase):
         )
 
         # creating a contact_type with valid arguments
-        valid_response2 = self.client.post("/content_type",
+        valid_response2 = self.client.post("/contact_type",
             json={
-                "id" : uuid.uuid4(),
                 "hex_colour": "#ffffff",
                 "type": "new dummy type",
                 "description": "new dummy description",
@@ -59,7 +58,7 @@ class ContactTypeTestCase(unittest.TestCase):
         )
 
         # creating a contact_type with valid arguments
-        valid_response3 = self.client.post("/content_type",
+        valid_response3 = self.client.post("/contact_type",
             json={
                 "hex_colour": "#ffffff",
                 "type": "dummy type 3",
@@ -68,7 +67,7 @@ class ContactTypeTestCase(unittest.TestCase):
         )
 
         # creating a contact_type with empty arguments
-        empty_response = self.client.post("/content_type",
+        empty_response = self.client.post("/contact_type",
             json={
                 "hex_colour": "",
                 "type": "",
