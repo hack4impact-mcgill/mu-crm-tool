@@ -140,25 +140,6 @@ class ProjectTestCase(unittest.TestCase):
         # test two unique uuid genearted correctly
         self.assertNotEqual(json_data[0]["id"], json_data[1]["id"])
 
-        p2 = Project(
-            address="dummy address",
-            city="dummy city",
-            province="dummy province",
-            postal_code="dummy postal_code",
-            neighbourhood="dummy neighbourhood",
-            year=2020,
-            name="dummy name",
-            type=test_list[1],
-            contacts=[],
-        )
-        db.session.add_all([p1, p2])
-        db.session.commit()
-
-        response = self.client.get("/project/types")
-        self.assertEqual(response.status_code, 200)
-        json_response = json.loads(response.get_data(as_text=True))
-        self.assertEqual(json_response, test_list)
-
     def test_get_specific_type(self):
         test_list = ["dummy type", "dummy type 2"]
         p1 = Project(
