@@ -3,6 +3,14 @@ from app import db
 from app.models import Project
 from . import project
 
+# helper returns all project types;
+@project.route("/types", methods=["GET"])
+def get_all_project_types():
+    types = []
+    for project in Project.query.distinct(Project.type):
+        types.append(project.type)
+    return jsonify(types)
+
 
 # get projects according to specified arguments (if any)
 @project.route("", methods=["GET"])
@@ -29,15 +37,6 @@ def get_project_by_id(id):
         abort(404, "No project found with specified ID.")
 
     return jsonify(project.serialize)
-
-
-# helper returns all project types;
-@project.route("/types", methods=["GET"])
-def get_all_project_types():
-    types = []
-    for project in Project.query.distinct(Project.type):
-        types.append(project.type)
-    return jsonify(types)
 
 
 # update a project by id
