@@ -85,60 +85,19 @@ class ProjectTestCase(unittest.TestCase):
             type=test_list[0],
             contacts=[],
         )
-
-    def test_create_project(self):
-        response = self.client.post(
-            "/project",
-            json={
-                "address": "dummy address 2",
-                "city": "dummy city 2",
-                "province": "dummy province 2",
-                "postal_code": "dummy postal_code 2",
-                "neighbourhood": "dummy neighbourhood 2",
-                "year": 2020,
-                "name": "dummy name 2",
-                "type": "dummy type 2",
-            },
-        )
-        response2 = self.client.post(
-            "/project",
-            json={
-                "address": "dummy address",
-                "city": "dummy city",
-                "province": "dummy province",
-                "postal_code": "dummy postal_code",
-                "neighbourhood": "dummy neighbourhood",
-                "year": 2020,
-                "name": "dummy name",
-                "type": "dummy type",
-            },
-        )
-
-        empty_response = self.client.post(
-            "/project",
-            json={
-                "address": "",
-                "city": "",
-                "province": "",
-                "postal_code": "",
-                "neighbourhood": "",
-                "year": None,
-                "name": "",
-                "type": "",
-            },
-        )
-
-        # test posted correctly
-        self.assertEqual(empty_response.status_code, 400)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response2.status_code, 200)
-
-        returned_json = self.client.get("/project")
-        json_data = returned_json.get_json()
-        self.assertEqual(len(json_data), 2)
-
-        # test two unique uuid genearted correctly
-        self.assertNotEqual(json_data[0]["id"], json_data[1]["id"])
+        p2 = Project(
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
+            type=test_list[1],
+            contacts=[],)
+        db.session.add_all([p1, p2])
+        db.session.commit()
+        response = self.client.get("/project/types")
 
     def test_get_specific_type(self):
         test_list = ["dummy type", "dummy type 2"]
@@ -246,3 +205,57 @@ class ProjectTestCase(unittest.TestCase):
         json_response = response.get_json()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json_response["id"], str(p_id))
+
+    def test_create_project(self):
+        response = self.client.post(
+            "/project",
+            json={
+                "address": "dummy address 2",
+                "city": "dummy city 2",
+                "province": "dummy province 2",
+                "postal_code": "dummy postal_code 2",
+                "neighbourhood": "dummy neighbourhood 2",
+                "year": 2020,
+                "name": "dummy name 2",
+                "type": "dummy type 2",
+            },
+        )
+        response2 = self.client.post(
+            "/project",
+            json={
+                "address": "dummy address",
+                "city": "dummy city",
+                "province": "dummy province",
+                "postal_code": "dummy postal_code",
+                "neighbourhood": "dummy neighbourhood",
+                "year": 2020,
+                "name": "dummy name",
+                "type": "dummy type",
+            },
+        )
+
+        empty_response = self.client.post(
+            "/project",
+            json={
+                "address": "",
+                "city": "",
+                "province": "",
+                "postal_code": "",
+                "neighbourhood": "",
+                "year": None,
+                "name": "",
+                "type": "",
+            },
+        )
+
+        # test posted correctly
+        self.assertEqual(empty_response.status_code, 400)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response2.status_code, 200)
+
+        returned_json = self.client.get("/project")
+        json_data = returned_json.get_json()
+        self.assertEqual(len(json_data), 2)
+
+        # test two unique uuid genearted correctly
+        self.assertNotEqual(json_data[0]["id"], json_data[1]["id"])
