@@ -82,31 +82,9 @@ class ProjectTestCase(unittest.TestCase):
             neighbourhood="dummy neighbourhood",
             year=2020,
             name="dummy name",
-            type="dummy type",
+            type=test_list[0],
             contacts=[],
         )
-        db.session.add(p)
-        db.session.commit()
-
-        p2_id = uuid.uuid4()
-        p2 = Project(
-            id=p2_id,
-            address="dummy address 2",
-            city="dummy city 2",
-            province="dummy province 2",
-            postal_code="dummy postal_code 2",
-            neighbourhood="dummy neighbourhood 2",
-            year=2020,
-            name="dummy name 2",
-        )
-
-        # get all projects
-        response = self.client.get("/project")
-        json_data = response.get_json()
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(json_data), 2)
-        self.assertEqual(json_data[0]["address"], "dummy address")
-        self.assertEqual(json_data[1]["year"], 2020)
 
     def test_create_project(self):
         response = self.client.post(
