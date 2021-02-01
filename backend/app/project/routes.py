@@ -4,34 +4,22 @@ from app.models import Project
 from . import project
 
 
-# get all endpoints
-@project.route("/projects", methods=["GET"])
-def get_all_projects():
-    projects = Project.query.all()
-    return jsonify(Project.serialize_list(projects))
-
-
-# helper returns all project types;
-@project.route("/types", methods=["GET"])
-def get_all_project_types():
-    types = []
-    for project in Project.query.distinct(Project.type):
-        types.append(project.type)
-    return jsonify(types)
-
-
-# return projects with the specified type
+# get projects according to specified arguments (if any)
 @project.route("", methods=["GET"])
-def get_projects_of_type():
-    type = request.args.get("type")
-    if type == "":
-        abort(404, "Project type invalid")
-    else:
-        projects = []
-        for project in Project.query.filter(Project.type == type):
-            projects.append(project)
-        return jsonify(Project.serialize_list(projects))
+def get_projects():
+    projects = Project.query.all()
 
+    type = request.args.get("type")
+    if type is not None:
+        if type == "":
+            abort(404, "Project type invalid")
+
+        projects = list(filter(lambda project: (
+            project.type == type), projects))
+
+    # add additional request arguments below
+
+    return jsonify(Project.serialize_list(projects))
 
 # get a project by id
 @project.route("/<uuid:id>", methods=["GET"])
@@ -41,6 +29,14 @@ def get_project_by_id(id):
         abort(404, "No project found with specified ID.")
 
     return jsonify(project.serialize)
+
+# helper returns all project types;
+@project.route("/types", methods=["GET"])
+def get_all_project_types():
+    types = []
+    for project in Project.query.distinct(Project.type):
+        types.append(project.type)
+    return jsonify(types)
 
 
 # update a project by id
