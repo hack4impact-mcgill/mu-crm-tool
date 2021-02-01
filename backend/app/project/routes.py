@@ -14,12 +14,12 @@ def get_projects():
         if type == "":
             abort(404, "Project type invalid")
 
-        projects = list(filter(lambda project: (
-            project.type == type), projects))
+        projects = list(filter(lambda project: (project.type == type), projects))
 
     # add additional request arguments below
 
     return jsonify(Project.serialize_list(projects))
+
 
 # get a project by id
 @project.route("/<uuid:id>", methods=["GET"])
@@ -29,6 +29,7 @@ def get_project_by_id(id):
         abort(404, "No project found with specified ID.")
 
     return jsonify(project.serialize)
+
 
 # helper returns all project types;
 @project.route("/types", methods=["GET"])
