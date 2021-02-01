@@ -46,13 +46,7 @@ def update_project(id):
     neighbourhood = data.get("neighbourhood")
     year = data.get("year")
     name = data.get("name")
-    # should we change the name of the attribute to project_type instead
     type = data.get("type")
-    # subject to change as relationship between photos has not been defined
-    #    try:
-    #        photo = request.files["photo"]
-    #    except KeyError:
-    #        photo = None
 
     project = Project.query.filter_by(id=id).first()
     if project is None:
