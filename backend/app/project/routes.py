@@ -1,14 +1,7 @@
 from flask import jsonify, request, abort
 from app import db
-from . import project
 from app.models import Project
-
-
-# get all endpoints
-@project.route("", methods=["GET"])
-def get_projects():
-    projects = Project.query.all()
-    return jsonify(Project.serialize_list(projects))
+from . import project
 
 
 # create a new project
@@ -65,7 +58,6 @@ def get_all_project_types():
 # return projects with the specified type
 @project.route("", methods=["GET"])
 def get_projects_of_type():
-    print(type)
     type = request.args.get("type")
     if type == "":
         abort(404, "Project type invalid")
