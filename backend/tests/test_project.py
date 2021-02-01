@@ -99,8 +99,6 @@ class ProjectTestCase(unittest.TestCase):
             year=2020,
             name="dummy name 2",
         )
-        db.session.add(p2)
-        db.session.commit()
 
         # get all projects
         response = self.client.get("/project")
