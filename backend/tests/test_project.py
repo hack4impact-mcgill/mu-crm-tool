@@ -199,7 +199,7 @@ class ProjectTestCase(unittest.TestCase):
         db.session.commit()
 
         # get all projects
-        response = self.client.get("/project/projects")
+        response = self.client.get("/project?")
         json_data = response.get_json()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(json_data), 2)
