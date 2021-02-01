@@ -19,7 +19,7 @@ class ProjectTestCase(unittest.TestCase):
         db.drop_all()
         self.app_context.pop()
 
-    def test_update_project(self):
+    def test_project_routes(self):
         p_id = uuid.uuid4()
         p = Project(
             id=p_id,
@@ -72,12 +72,9 @@ class ProjectTestCase(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 404)
 
-        # test get_projects endpoint
-    def test_get_project(self):
-        # pre-populate database
-        p_id = uuid.uuid4()
-        p = Project(
-            id=p_id,
+    def test_get_all_types(self):
+        test_list = ["dummy type", "dummy type 2"]
+        p1 = Project(
             address="dummy address",
             city="dummy city",
             province="dummy province",
@@ -101,8 +98,6 @@ class ProjectTestCase(unittest.TestCase):
             neighbourhood="dummy neighbourhood 2",
             year=2020,
             name="dummy name 2",
-            type="dummy type 2",
-            contacts=[],
         )
         db.session.add(p2)
         db.session.commit()
