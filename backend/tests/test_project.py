@@ -251,4 +251,3 @@ class ProjectTestCase(unittest.TestCase):
         json_response = response.get_json()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json_response["id"], str(p_id))
-
