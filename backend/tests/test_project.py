@@ -257,10 +257,3 @@ class ProjectTestCase(unittest.TestCase):
         self.assertEqual(empty_response.status_code, 400)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response2.status_code, 200)
-
-        returned_json = self.client.get("/project")
-        json_data = returned_json.get_json()
-        self.assertEqual(len(json_data), 2)
-
-        # test two unique uuid genearted correctly
-        self.assertNotEqual(json_data[0]["id"], json_data[1]["id"])
