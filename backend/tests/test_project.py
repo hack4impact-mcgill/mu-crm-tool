@@ -94,7 +94,8 @@ class ProjectTestCase(unittest.TestCase):
             year=2020,
             name="dummy name",
             type=test_list[1],
-            contacts=[],)
+            contacts=[],
+        )
         db.session.add_all([p1, p2])
         db.session.commit()
         response = self.client.get("/project/types")
