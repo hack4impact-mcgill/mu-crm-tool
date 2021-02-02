@@ -38,7 +38,7 @@ class ContactTypeTestCase(unittest.TestCase):
         response = self.client.delete("/contact_type/{}".format(ct_id))
         self.assertEqual(response.status_code, 404)
 
-def test_edit_contact_type_route(self):
+    def test_edit_contact_type_route(self):
         ct_id = uuid.uuid4()
         ct = ContactType(
             id=ct_id,
