@@ -98,6 +98,7 @@ class ProjectTestCase(unittest.TestCase):
         )
         db.session.add_all([p1, p2])
         db.session.commit()
+
         response = self.client.get("/project/types")
         self.assertEqual(response.status_code, 200)
         json_response = json.loads(response.get_data(as_text=True))

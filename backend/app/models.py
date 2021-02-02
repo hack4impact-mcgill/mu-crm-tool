@@ -7,8 +7,6 @@ import datetime
 # create model classes here
 
 # Donation Model
-
-
 class Donation(db.Model):
     __tablename__ = "donations"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -66,8 +64,6 @@ association = db.Table(
 )
 
 # Project Model
-
-
 class Project(db.Model):
     __tablename__ = "projects"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
