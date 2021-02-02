@@ -27,6 +27,21 @@ class ContactTestCase(unittest.TestCase):
             event="dummy",
             num_tickets=2,
         )
+        passing_case = Donation(
+            name="dummy",
+            email="dummy@gamil.com",
+            date=datetime.datetime.now(),
+            donation_source="dummy",
+            event="dummy",
+            num_tickets=2,
+            amount=200,
+        )
+        db.session.add(passing_case)
+        db.session.commit()
+        d = Donation.query.filter_by(name="dummy").first()
+        # test serialize
+        self.assertEqual(d.amount, 200)
+
         db.session.add(failing_case)
         # test passes when the commit() fails due to amount field missing
         self.assertRaises(IntegrityError, db.session.commit)
