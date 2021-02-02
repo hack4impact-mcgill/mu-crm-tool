@@ -31,6 +31,7 @@ class Donation(db.Model):
             "event": self.event,
             "num_tickets": self.num_tickets,
             "added_by": self.added_by,
+            "amount": self.amount,
         }
 
     @staticmethod
