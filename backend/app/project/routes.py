@@ -4,7 +4,6 @@ from app.models import Project
 from . import project
 
 
-
 # create a new project
 @project.route("", methods=["POST"])
 def create_project():
