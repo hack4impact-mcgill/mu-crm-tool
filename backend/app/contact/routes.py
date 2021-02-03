@@ -27,7 +27,6 @@ def create_contact():
         or Contact_type == None
     ):
         abort(400, "Indicated fields cannot be empty")
-
     new_contact = Contact(
         name=Name,
         email=Email,
