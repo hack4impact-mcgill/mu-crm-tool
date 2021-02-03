@@ -28,7 +28,12 @@ def test():
     import unittest
 
     tests = unittest.TestLoader().discover("tests")
-    unittest.TextTestRunner(verbosity=2).run(tests)
+    result = unittest.TextTestRunner(verbosity=2).run(tests)
+
+    if result.wasSuccessful():
+        exit(0)
+    else:
+        exit(1)
 
 
 if __name__ == "__main__":
