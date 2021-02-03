@@ -56,8 +56,7 @@ class ContactTestCase(unittest.TestCase):
         # deleting a contact that does not exist
         response = self.client.delete("/contact/{}".format(c_id))
         self.assertEqual(response.status_code, 404)
-        
-    
+         
     # testing creating a contact
     def test_create_a_contact(self):
         dummy_ct_id = uuid.uuid4()
