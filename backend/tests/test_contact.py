@@ -56,3 +56,33 @@ class ContactTestCase(unittest.TestCase):
         # deleting a contact that does not exist
         response = self.client.delete("/contact/{}".format(c_id))
         self.assertEqual(response.status_code, 404)
+        
+    
+    # testing creating a contact
+    def test_create_a_contact(self):
+        dummy_ct_id = uuid.uuid4()
+        dummy_ct = ContactType(
+            id=dummy_ct_id,
+            hex_colour="#ffffff",
+            type="dummy type",
+            description="dummy description",
+        )
+
+        create_obj = {
+            "name": "dummy name",
+            "email": "dummy email",
+            "secondary_email": "dummy secondary email",
+            "cellphone": "dummy cell phone",
+            "role": "dummy role",
+            "organization": "dummy organization",
+            "neighbourhood": "dummy neighbourhood",
+            "contact_type": dummy_ct,
+        }
+
+        # create a contact
+        response = self.client.post(
+            "/contact",
+            content_type="application/json",
+            data=json.dumps(create_obj),
+        )
+        self.assertEqual(response.status_code, 200)
