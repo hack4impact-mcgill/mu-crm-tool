@@ -7,36 +7,36 @@ from . import contact
 @contact.route("", methods=["POST"])
 def create_contact():
     data = request.get_json(force=True)
-    Name = data.get("name")
-    Email = data.get("email")
-    Secondary_email = data.get("secondary_email")
-    Cellphone = data.get("cellphone")
-    Role = data.get("role")
-    Organization = data.get("organization")
-    Neighbourhood = data.get("neighbourhood")
-    Projects = data.get("projects")
-    Contact_type = data.get("contact_type")
+    name = data.get("name")
+    email = data.get("email")
+    secondary_email = data.get("secondary_email")
+    cellphone = data.get("cellphone")
+    role = data.get("role")
+    organization = data.get("organization")
+    neighbourhood = data.get("neighbourhood")
+    projects = data.get("projects")
+    contact_type = data.get("contact_type")
 
     if (
         # all non-nullable attributes and relationships
-        Name == ""
-        or Email == ""
-        or Cellphone == ""
-        or Organization == ""
-        or Projects == None
-        or Contact_type == None
+        name == ""
+        or email == ""
+        or cellphone == ""
+        or organization == ""
+        or projects == None
+        or contact_type == None
     ):
         abort(400, "Indicated fields cannot be empty")
     new_contact = Contact(
-        name=Name,
-        email=Email,
-        secondary_email=Secondary_email,
-        cellphone=Cellphone,
-        role=Role,
-        organization=Organization,
-        neighbourhood=Neighbourhood,
-        projects=Projects,
-        contact_type=Contact_type,
+        name=name,
+        email=email,
+        secondary_email=secondary_email,
+        cellphone=cellphone,
+        role=role,
+        organization=organization,
+        neighbourhood=neighbourhood,
+        projects=projects,
+        contact_type=contact_type,
     )
 
     db.session.add(new_contact)
