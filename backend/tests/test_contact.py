@@ -56,3 +56,47 @@ class ContactTestCase(unittest.TestCase):
         # deleting a contact that does not exist
         response = self.client.delete("/contact/{}".format(c_id))
         self.assertEqual(response.status_code, 404)
+        
+    def test_edit_a_contact(self):
+        dummy_ct_id = uuid.uuid4()
+        dummy_ct = ContactType(
+            id=dummy_ct_id,
+            hex_colour="#ffffff",
+            type="dummy type",
+            description="dummy description",
+        )
+
+        c_id = uuid.uuid4()
+        c = Contact(
+            id=c_id,
+            name="dummy name",
+            email="dummy email",
+            secondary_email="dummy secondary email",
+            cellphone="dummy cellphone",
+            role="dummy role",
+            organization="dummy organization",
+            neighbourhood="dummy neighbourhood",
+            contact_type=dummy_ct,
+        )
+
+        db.session.add(c)
+        db.session.commit()
+
+        # edit a contact with valid arguments
+        response = self.client.put(
+            "/contact/{}/edit".format(c_id),
+            content_type="application/json",
+            data=json.dumps(update_obj),
+        )
+        self.assertEqual(response.status_code, 200)
+        json_response = json.loads(response.get_data(asText=True))
+        self.assertDictContainsSubset(update_obj, json_response)
+
+        # edit a contact that does not exist
+        response = self.client.put(
+            "/contact/{}/edit".format(uuid.uuid4()),
+            content_type="application/json",
+            data=json.dumps({}),
+        )
+        self.assertEqual(response.status_code, 404)
+       
