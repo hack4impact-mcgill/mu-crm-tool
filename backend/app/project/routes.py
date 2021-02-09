@@ -3,6 +3,49 @@ from app import db
 from app.models import Project
 from . import project
 
+
+# create a new project
+@project.route("", methods=["POST"])
+def create_project():
+    data = request.get_json(force=True)
+    address = data.get("address")
+    city = data.get("city")
+    province = data.get("province")
+    postal_code = data.get("postal_code")
+    neighbourhood = data.get("neighbourhood")
+    year = data.get("year")
+    name = data.get("name")
+    type = data.get("type")
+
+    # check if all fields are empty, if so it's a garbage post
+    if (
+        address == ""
+        and city == ""
+        and province == ""
+        and postal_code == ""
+        and neighbourhood == ""
+        and year is None
+        and name == ""
+        and type == ""
+    ):
+        abort(400, "Cannot have all empty fields for a new project")
+
+    new_project = Project(
+        address=address,
+        city=city,
+        province=province,
+        postal_code=postal_code,
+        neighbourhood=neighbourhood,
+        year=year,
+        name=name,
+        type=type,
+    )
+
+    db.session.add(new_project)
+    db.session.commit()
+    return jsonify(new_project.serialize)
+
+
 # helper returns all project types;
 @project.route("/types", methods=["GET"])
 def get_all_project_types():
