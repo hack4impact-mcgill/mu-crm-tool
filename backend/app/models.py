@@ -17,6 +17,7 @@ class Donation(db.Model):
     event = db.Column(db.String(128))
     num_tickets = db.Column(db.Integer)
     added_by = db.Column(UUID(as_uuid=True), db.ForeignKey("users.id"), nullable=True)
+    amount = db.Column(db.Integer, nullable=False)
 
     @property
     def serialize(self):
@@ -30,6 +31,7 @@ class Donation(db.Model):
             "event": self.event,
             "num_tickets": self.num_tickets,
             "added_by": self.added_by,
+            "amount": self.amount,
         }
 
     @staticmethod
