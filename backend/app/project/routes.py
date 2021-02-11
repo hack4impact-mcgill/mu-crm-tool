@@ -1,6 +1,6 @@
 from flask import jsonify, request, abort
 from app import db
-from app.models import Project
+from app.models import Project, Contact
 from . import project
 
 
@@ -83,7 +83,7 @@ def get_project_by_id(id):
 
 
 # update a project by id
-@project.route("/<uuid:id>/update", methods=["PUT"])
+@project.route("/<uuid:id>/", methods=["PUT"])
 def update_project(id):
     data = request.get_json(force=True)
     address = data.get("address")
@@ -129,3 +129,12 @@ def update_project(id):
     db.session.add(project)
     db.session.commit()
     return jsonify(project.serialize)
+
+
+# get all contacts by project id
+@project.route("/<uuid:id>/contacts", methods=["GET"])
+def get_all_contacts_by_project(id):
+    project = Project.query.filter_by(id=id).first()
+    contacts = project.contacts
+
+    return jsonify(Contact.serialize_list(contacts))

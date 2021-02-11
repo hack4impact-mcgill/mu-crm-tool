@@ -38,7 +38,7 @@ class ProjectTestCase(unittest.TestCase):
 
         # update a project with empty argumets
         response = self.client.put(
-            "/project/{}/update".format(p_id),
+            "/project/{}/".format(p_id),
             content_type="application/json",
             data=json.dumps({}),
         )
@@ -56,7 +56,7 @@ class ProjectTestCase(unittest.TestCase):
             "type": "new dummy type",
         }
         response = self.client.put(
-            "/project/{}/update".format(p_id),
+            "/project/{}/".format(p_id),
             content_type="application/json",
             data=json.dumps(update_obj),
         )
@@ -66,7 +66,7 @@ class ProjectTestCase(unittest.TestCase):
 
         # update a project that does not exist
         response = self.client.put(
-            "/project/{}/update".format(uuid.uuid4()),
+            "/project/{}/".format(uuid.uuid4()),
             content_type="application/json",
             data=json.dumps(update_obj),
         )
@@ -298,3 +298,57 @@ class ProjectTestCase(unittest.TestCase):
         self.assertEqual(empty_response.status_code, 400)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response2.status_code, 200)
+
+    def test_get_contacts_by_project(self):
+
+        c0_id = uuid.uuid4()
+        c0 = Contact(
+            id=c0_id,
+            name="dummy name",
+            email="dummy email",
+            cellphone="dummy cellphone",
+            role="dummy role",
+            organization="dummy organization",
+            neighbourhood="dummy neighbourhood",
+        )
+        c1_id = uuid.uuid4()
+        c1 = Contact(
+            id=c1_id,
+            name="dummy name",
+            email="dummy email",
+            cellphone="dummy cellphone",
+            role="dummy role",
+            organization="dummy organization",
+            neighbourhood="dummy neighbourhood",
+        )
+        ct_id = uuid.uuid4()
+        ct = ContactType(
+            id=ct_id,
+            hex_colour="#fffffff",
+            type="dummy type",
+            description="dummy description",
+            contacts=[c0, c1],
+        )
+        p_id = uuid.uuid4()
+        p = Project(
+            id=p_id,
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
+            type="dummy type",
+            contacts=[c0, c1],
+        )
+        db.session.add(p)
+        db.session.commit()
+
+        # get contacts by project that exists
+        response = self.client.get("/project/{}/contacts".format(p_id))
+        json_response = response.get_json()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(json_response), 2)
+        self.assertEqual(json_response[0]["id"], str(c0_id))
+        self.assertEqual(json_response[1]["id"], str(c1_id))
