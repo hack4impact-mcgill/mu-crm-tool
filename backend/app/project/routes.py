@@ -83,7 +83,7 @@ def get_project_by_id(id):
 
 
 # update a project by id
-@project.route("/<uuid:id>/", methods=["PUT"])
+@project.route("/<uuid:id>", methods=["PUT"])
 def update_project(id):
     data = request.get_json(force=True)
     address = data.get("address")

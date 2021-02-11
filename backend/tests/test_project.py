@@ -38,7 +38,7 @@ class ProjectTestCase(unittest.TestCase):
 
         # update a project with empty argumets
         response = self.client.put(
-            "/project/{}/".format(p_id),
+            "/project/{}".format(p_id),
             content_type="application/json",
             data=json.dumps({}),
         )
@@ -56,7 +56,7 @@ class ProjectTestCase(unittest.TestCase):
             "type": "new dummy type",
         }
         response = self.client.put(
-            "/project/{}/".format(p_id),
+            "/project/{}".format(p_id),
             content_type="application/json",
             data=json.dumps(update_obj),
         )
@@ -66,7 +66,7 @@ class ProjectTestCase(unittest.TestCase):
 
         # update a project that does not exist
         response = self.client.put(
-            "/project/{}/".format(uuid.uuid4()),
+            "/project/{}".format(uuid.uuid4()),
             content_type="application/json",
             data=json.dumps(update_obj),
         )
