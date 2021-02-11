@@ -350,5 +350,6 @@ class ProjectTestCase(unittest.TestCase):
         json_response = response.get_json()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(json_response), 2)
-        self.assertEqual(json_response[0]["id"], str(c0_id))
-        self.assertEqual(json_response[1]["id"], str(c1_id))
+        actual_ids = [json_response[0]["id"], json_response[1]["id"]]
+        expected_ids = [str(c0_id), str(c1_id)]
+        self.assertCountEqual(expected_ids, actual_ids)
