@@ -135,6 +135,8 @@ def update_project(id):
 @project.route("/<uuid:id>/contacts", methods=["GET"])
 def get_all_contacts_by_project(id):
     project = Project.query.filter_by(id=id).first()
+    if project is None:
+        abort(404, "No project found with specified ID.")
     contacts = project.contacts
 
     return jsonify(Contact.serialize_list(contacts))

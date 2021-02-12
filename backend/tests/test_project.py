@@ -300,6 +300,11 @@ class ProjectTestCase(unittest.TestCase):
         self.assertEqual(response2.status_code, 200)
 
     def test_get_contacts_by_project(self):
+        p_id = uuid.uuid4()
+
+        # get contacts by project that does not exist
+        response = self.client.get("/project/{}/contacts".format(p_id))
+        self.assertEqual(response.status_code, 404)
 
         c0_id = uuid.uuid4()
         c0 = Contact(
@@ -329,7 +334,6 @@ class ProjectTestCase(unittest.TestCase):
             description="dummy description",
             contacts=[c0, c1],
         )
-        p_id = uuid.uuid4()
         p = Project(
             id=p_id,
             address="dummy address",
