@@ -21,6 +21,8 @@ def delete_contact_type(id):
 @contact_type.route("/<uuid:id>/contacts", methods=["GET"])
 def get_all_contacts_by_contact_type(id):
     contact_type = ContactType.query.filter_by(id=id).first()
+    if contact_type is None:
+        abort(404, "No contact type found with specified ID.")
     contacts = contact_type.contacts
 
     return jsonify(Contact.serialize_list(contacts))

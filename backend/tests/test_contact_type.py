@@ -39,6 +39,11 @@ class ContactTypeTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_get_contacts_by_contact_type(self):
+        ct_id = uuid.uuid4()
+
+        # get contacts by contact_type that does not exist
+        response = self.client.get("/contact_type/{}/contacts".format(ct_id))
+        self.assertEqual(response.status_code, 404)
 
         c0_id = uuid.uuid4()
         c0 = Contact(
@@ -60,7 +65,6 @@ class ContactTypeTestCase(unittest.TestCase):
             organization="dummy organization",
             neighbourhood="dummy neighbourhood",
         )
-        ct_id = uuid.uuid4()
         ct = ContactType(
             id=ct_id,
             hex_colour="#fffffff",
