@@ -9,7 +9,7 @@ def get_donations():
 
     email = request.args.get("email")
     if email is not None:
-        
+
         filtered_donation = list(
             filter(lambda donations: (donations.email == email), donations)
         )
