@@ -4,14 +4,12 @@ from . import donation
 
 
 @donation.route("", methods=["GET"])
-def get_donation_amounts_by_email():
+def get_donations():
     donations = Donation.query.all()
 
     email = request.args.get("email")
     if email is not None:
-        if email == "":
-            abort(404, "Invalid email address")
-
+        
         filtered_donation = list(
             filter(lambda donations: (donations.email == email), donations)
         )
