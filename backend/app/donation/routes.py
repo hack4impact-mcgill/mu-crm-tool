@@ -3,8 +3,8 @@ from app.models import Donation
 from . import donation
 
 
-@donation.route("", methods=["GET"])
-def get_donations():
+@donation.route("/amount", methods=["GET"])
+def get_donation_amount():
     donations = Donation.query.all()
 
     email = request.args.get("email")

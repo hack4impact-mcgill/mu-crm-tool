@@ -71,16 +71,16 @@ class DonationTestCase(unittest.TestCase):
         db.session.commit()
 
         # testing passing case
-        response = self.client.get("/donation?email={}".format(email_address))
+        response = self.client.get("/donation/amount?email={}".format(email_address))
         self.assertEqual(response.status_code, 200)
         json_response = response.get_json()
         self.assertEqual(json_response["total_amount"], 500)
 
         # testing with missing param
-        response2 = self.client.get("/donation?email=")
+        response2 = self.client.get("/donation/amount?email=")
         self.assertEqual(response2.status_code, 404)
 
         # testing with email that doesn't exist in the database
         bad_email = "bad_email@gmail.com"
-        response3 = self.client.get("/donation?email={}".format(bad_email))
+        response3 = self.client.get("/donation/amount?email={}".format(bad_email))
         self.assertEqual(response3.status_code, 404)
