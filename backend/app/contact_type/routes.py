@@ -5,12 +5,11 @@ from app.models import ContactType
 from . import contact_type
 
 # getting all contact types
-@contact_type.route("/contact_type", methods=["GET"])
-def get_contact_types():
-    types = []
-    for project in contact_type.query.distinct(contact_type.type):
-        types.append(contact_type.type)
-    return jsonify(types)
+@contact_type.route("", methods=["GET"])
+def get_all_contact_types():
+    types = ContactType.query.all()
+    return jsonify([ContactType.serialize(contact_type) for contact_type in types])
+    
 
 # creating contact_type
 @contact_type.route("", methods=["POST"])
