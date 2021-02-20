@@ -11,7 +11,7 @@ def get_donation_amount():
     if email is not None:
 
         filtered_donation = list(
-            filter(lambda donations: (donations.email == email), donations)
+            filter(lambda donation: (donation.email == email), donations)
         )
 
         # if no email is found in the database
