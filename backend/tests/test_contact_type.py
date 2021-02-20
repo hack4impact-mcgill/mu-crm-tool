@@ -85,9 +85,11 @@ class ContactTypeTestCase(unittest.TestCase):
         self.assertEqual(valid_response3.status_code, 200)
         self.assertEqual(empty_response.status_code, 400)
 
-        returned_json = self.client.get("")
+        #use a query test for 
+        returned_json = self.client.get("/contact_type")
         json_data = returned_json.get_json()
         self.assertEqual(len(json_data), 3)
+
 
         # checking that the valid responses have two unique ids
         self.assertNotEqual(json_data[0]["id"], json_data[1]["id"])
@@ -95,3 +97,6 @@ class ContactTypeTestCase(unittest.TestCase):
         self.assertEqual(json_data[0]["type"], "dummy type")
         self.assertEqual(json_data[1]["hex_colour"], "#ffffff")
         self.assertEqual(json_data[2]["description"], "dummy description 3")
+
+        #testing that it got all the contact types
+        #could get all contact types & count them

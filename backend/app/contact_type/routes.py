@@ -8,7 +8,7 @@ from . import contact_type
 @contact_type.route("", methods=["GET"])
 def get_all_contact_types():
     types = ContactType.query.all()
-    return jsonify([ContactType.serialize(contact_type) for contact_type in types])
+    return jsonify(ContactType.serialize_list(types))
     
 
 # creating contact_type
@@ -18,14 +18,15 @@ def create_contact_type():
     hex_colour = data.get("hex_colour")
     type = data.get("type")
     description = data.get("description")
-
+    
     if hex_colour == "" and type == "" and description == "":
         abort(400, "Please fill all indicate fields")
 
     new_contact_type = ContactType(
         hex_colour=hex_colour, 
         type=type, 
-        description=description)
+        description=description,
+        contacts=[])
 
     db.session.add(new_contact_type)
     db.session.commit()
