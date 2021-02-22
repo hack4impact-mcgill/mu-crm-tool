@@ -65,8 +65,12 @@ class ContactTestCase(unittest.TestCase):
             hex_colour="#ffffff",
             type="dummy type",
             description="dummy description",
+            contacts=[],
         )
+        db.session.add(dummy_ct)
+        db.session.commit()
 
+        """
         create_obj = {
             "name": "dummy name",
             "email": "dummy email",
@@ -75,13 +79,84 @@ class ContactTestCase(unittest.TestCase):
             "role": "dummy role",
             "organization": "dummy organization",
             "neighbourhood": "dummy neighbourhood",
-            "contact_type": dummy_ct,
+            "contact_type": dummy_ct_id,
         }
+        """
 
-        # create a contact
+        # creating a contact with valid inputs
         response = self.client.post(
             "/contact",
-            content_type="application/json",
-            data=json.dumps(create_obj),
+            json={
+                "name": "dummy name",
+                "email": "dummy email",
+                "secondary_email": "dummy secondary email",
+                "cellphone": "dummy cell phone",
+                "role": "dummy role",
+                "organization": "dummy organization",
+                "neighbourhood": "dummy neighbourhood",
+                "contact_type": dummy_ct_id,
+            },
         )
         self.assertEqual(response.status_code, 200)
+
+        # check that the contact has been properly added to the correct contact type
+        contact_type = ContactType.query.filter_by(id=dummy_ct_id).first()
+        self.assertEqual(len(contact_type.contacts), 1)
+
+        # creating a contact with invalid fields
+        response = self.client.post(
+            "/contact",
+            json={
+                "name": "dummy name",
+                "email": "",
+                "secondary_email": "dummy secondary email",
+                "cellphone": "dummy cell phone",
+                "role": "dummy role",
+                "organization": "dummy organization",
+                "neighbourhood": "dummy neighbourhood",
+                "contact_type": dummy_ct_id,
+            },
+        )
+        self.assertEqual(response.status_code, 400)
+        """
+        nullable_obj = {
+            "name": "dummy name",
+            "email": "dummy email",
+            "cellphone": "dummy cellphone",
+            "organization": "dummy organization",
+            "contact_type": dummy_ct_id,
+        }
+        """
+
+        # creating a contact with only required fields
+        response = self.client.post(
+            "/contact",
+            json={
+                "name": "dummy name",
+                "email": "dummy email",
+                "cellphone": "dummy cellphone",
+                "organization": "dummy organization",
+                "contact_type": dummy_ct_id,
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+
+        # check that the contact has been properly added to the correct contact type
+        contact_type = ContactType.query.filter_by(id=dummy_ct_id).first()
+        self.assertEqual(len(contact_type.contacts), 2)
+
+        # creating a contact with empty fields
+        response = self.client.post(
+            "/contact",
+            json={
+                "name": "",
+                "email": "",
+                "secondary_email": "",
+                "cellphone": "",
+                "role": "",
+                "organization": "",
+                "neighbourhood": "",
+                "contact_type": "",
+            },
+        )
+        self.assertEqual(response.status_code, 400)
