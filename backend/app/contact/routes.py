@@ -14,20 +14,30 @@ def create_contact():
     role = data.get("role")
     organization = data.get("organization")
     neighbourhood = data.get("neighbourhood")
-    projects = data.get("projects")
-    contact_type = data.get("contact_type")
+    ct = data.get("contact_type")
 
     if (
-        # all non-nullable attributes and relationships
-        name == ""
-        or email == ""
-        or cellphone == ""
-        or organization == ""
-        or projects == None
-        or contact_type == None
+        # check if all fields are empty
+        (name == "" or name is None)
+        and (email == "" or email is None)
+        and (secondary_email == "" or secondary_email is None)
+        and (cellphone == "" or cellphone is None)
+        and (role == "" or role is None)
+        and (organization == "" or organization is None)
+        and (neighbourhood == "" or neighbourhood is None)
+        and (ct == "" or ct is None)
+        or data == {}
     ):
-        abort(400, "Indicated fields cannot be empty")
+        abort(400, "Cannot have all empty fields for new contact")
+    # check if non-nullable fields have empty arguments
+    elif name == "" or email == "" or cellphone == "" or organization == "" or ct == "":
+        abort(400, "Cannot create contact without specified fields")
+
+    ct = ContactType.query.filter_by(id=ct).first()
+
+    c_id = uuid.uuid4()
     new_contact = Contact(
+        id=c_id,
         name=name,
         email=email,
         secondary_email=secondary_email,
@@ -35,12 +45,13 @@ def create_contact():
         role=role,
         organization=organization,
         neighbourhood=neighbourhood,
-        projects=projects,
-        contact_type=contact_type,
     )
 
+    # add contact to the contact types list of contacts
+    ct.contacts.append(new_contact)
     db.session.add(new_contact)
     db.session.commit()
+    return jsonify(new_contact.serialize)
 
 
 # delete a contact by id
