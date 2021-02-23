@@ -11,12 +11,13 @@ class Donation(db.Model):
     __tablename__ = "donations"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = db.Column(db.String(64), nullable=False)
-    email = db.Column(db.String(64), unique=True, nullable=False)
+    email = db.Column(db.String(64), nullable=False)
     date = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
     donation_source = db.Column(db.String(128), nullable=False)
     event = db.Column(db.String(128))
     num_tickets = db.Column(db.Integer)
     added_by = db.Column(UUID(as_uuid=True), db.ForeignKey("users.id"), nullable=True)
+    amount = db.Column(db.Integer, nullable=False)
 
     @property
     def serialize(self):
@@ -30,6 +31,7 @@ class Donation(db.Model):
             "event": self.event,
             "num_tickets": self.num_tickets,
             "added_by": self.added_by,
+            "amount": self.amount,
         }
 
     @staticmethod
