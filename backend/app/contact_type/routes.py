@@ -16,7 +16,6 @@ def delete_contact_type(id):
 
     return jsonify(contact_type.serialize)
 
-<<<<<<< HEAD
 # edit a contact_type by id
 @contact_type.route("/<uuid:id>/edit", methods=["PUT"])
 def edit_contact_type(id):
@@ -44,7 +43,6 @@ def edit_contact_type(id):
     db.session.add(contact_type)
     db.session.commit()
     return jsonify(contact_type.serialize)
-=======
 
 # get all contacts by contact_type
 @contact_type.route("/<uuid:id>/contacts", methods=["GET"])
@@ -55,4 +53,3 @@ def get_all_contacts_by_contact_type(id):
     contacts = contact_type.contacts
 
     return jsonify(Contact.serialize_list(contacts))
->>>>>>> main
