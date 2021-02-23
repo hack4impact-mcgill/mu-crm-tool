@@ -116,36 +116,6 @@ class ContactTypeTestCase(unittest.TestCase):
         db.session.add(ct)
         db.session.commit()
 
-        # update a contact_type with empty arguments
-        response = self.client.put("/contact_type/{}/edit".format(id),
-            content_type="application/json",
-            data=json.dumps({}),
-        )
-        self.assertEqual(response.status_code, 400)
-
-        # new arguments for contact_type
-        edited_ct = {
-            "hex_colour": "#ffffff",
-            "type": "new dummy type",
-            "description": "new dummy description",
-        }
-
-        # edit a contact_type does exist
-        response = self.client.put("/contact_type/{}/edit".format(ct_id),
-            content_type="application/json",
-            data=json.dumps(edited_ct)
-
-        )
-        self.assertEqual(response.status_code, 200)
-
-        # editing a contact_type that doesn't exist
-        response = self.client.put(
-            "/contact_type/{}/edit".format(uuid.uuid4()),
-            content_type="application/json",
-            data=json.dumps(edited_ct),
-        )
-        self.assertEqual(response.status_code, 404)
-        
         # get contacts by contact_type that exists
         response = self.client.get("/contact_type/{}/contacts".format(ct_id))
         json_response = response.get_json()
