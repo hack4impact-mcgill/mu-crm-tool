@@ -5,14 +5,6 @@ from app.models import Donation
 import uuid
 from datetime import datetime
 
-# Get all donations of user_id
-@donation.route("/donations/<user_uuid>", methods=["GET"])
-def get_denoations_for_user(user_uuid):
-    # Look for all donations of "user_id"
-    donations = Donation.query.filter_by(added_by=user_uuid).all()
-    return jsonify(Donation.serialize_list(donations))
-
-
 # Create new donation
 @donation.route("", methods=["POST"])
 def create_donation():
