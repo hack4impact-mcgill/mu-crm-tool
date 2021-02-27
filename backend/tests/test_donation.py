@@ -88,7 +88,7 @@ class DonationTestCase(unittest.TestCase):
         self.assertEqual(response3.status_code, 404)
 
     def test_create_donation(self):
-        u_id=uuid.uuid4()
+        u_id = uuid.uuid4()
         u = MuUser(
             id=u_id,
             name="dummy",
@@ -106,7 +106,7 @@ class DonationTestCase(unittest.TestCase):
                 "donation_source": "dummy source",
                 "event": "dummy event",
                 "num_tickets": 2,
-                "added_by":u_id,
+                "added_by": u_id,
                 "amount": 100,
             },
         )
@@ -118,7 +118,7 @@ class DonationTestCase(unittest.TestCase):
                 "donation_source": "dummy2 source",
                 "event": "dummy event 2",
                 "num_tickets": 15,
-                "added_by":u_id,
+                "added_by": u_id,
                 "amount": 50,
             },
         )
@@ -130,7 +130,7 @@ class DonationTestCase(unittest.TestCase):
                 "donation_source": "",
                 "event": "",
                 "num_tickets": None,
-                "added_by":None,
+                "added_by": None,
                 "amount": None,
             },
         )
@@ -138,7 +138,6 @@ class DonationTestCase(unittest.TestCase):
         self.assertEqual(empty_response.status_code, 400)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response2.status_code, 200)
-
 
     def test_update_donation(self):
         d_id = uuid.uuid4()
@@ -165,12 +164,12 @@ class DonationTestCase(unittest.TestCase):
 
         # update a donation with valid arguments
         update_obj = {
-                "name": "dummy2 name",
-                "email": "dummy2@email.com",
-                "donation_source": "dummy2 source",
-                "event": "dummy event 2",
-                "num_tickets": 15,
-                "amount": 50,
+            "name": "dummy2 name",
+            "email": "dummy2@email.com",
+            "donation_source": "dummy2 source",
+            "event": "dummy event 2",
+            "num_tickets": 15,
+            "amount": 50,
         }
         response = self.client.put(
             "/donation/{}".format(d_id),
@@ -188,7 +187,7 @@ class DonationTestCase(unittest.TestCase):
             data=json.dumps(update_obj),
         )
         self.assertEqual(response.status_code, 404)
-    
+
     def test_delete_donation(self):
         d_id = uuid.uuid4()
 
