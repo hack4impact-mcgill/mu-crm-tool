@@ -14,7 +14,7 @@ def get_denoations_for_user(user_uuid):
 
 
 # Create new donation
-@donation.route("/create-donation", methods=["POST"])
+@donation.route("", methods=["POST"])
 def create_donation():
     # Load request to data
     data = request.get_json(force=True)
@@ -28,6 +28,7 @@ def create_donation():
     event = data.get("event")
     num_tickets = data.get("num_tickets")
     added_by = data.get("added_by")
+    amount = data.get("amount")
     # Check if nullable=False columns are empty
     if name == "" or donation_source == "" or email == "":
         abort(400, "Name, doantion_source, and email can not be empty")
@@ -40,6 +41,7 @@ def create_donation():
         event=event,
         num_tickets=num_tickets,
         added_by=added_by,
+        amount=amount,
     )
     db.session.add(new_donation)
     db.session.commit()
@@ -47,7 +49,7 @@ def create_donation():
 
 
 # Update Donation
-@donation.route("/update_dontation/<donation_uuid>", methods=["PUT"])
+@donation.route("/<uuid:donation_uuid>", methods=["PUT"])
 def update_donation(donation_uuid):
     data = request.get_json(force=True)
     donation = Donation.query.get(donation_uuid)
@@ -60,14 +62,16 @@ def update_donation(donation_uuid):
     event = data.get("event")
     num_tickets = data.get("num_tickets")
     added_by = data.get("added_by")
+    amount = data.get("amount")
     if (
-        name == ""
-        and email == ""
+        (name == "" or name is None)
+        and (email == "" or email is None)
         and date is None
-        and donation_source == ""
-        and event == ""
+        and (donation_source == "" or donation_source is None)
+        and (event == "" or event is None)
         and num_tickets is None
-        and added_by == ""
+        and (added_by == "" or added_by is None)
+        and (amount is None)
     ):
         abort(400, "No donation fields to update")
     if name:
@@ -81,19 +85,21 @@ def update_donation(donation_uuid):
     if event:
         donation.event = event
     if num_tickets:
-        donation.num_tickets = int(num_tickets)
+        donation.num_tickets = num_tickets
     if added_by:
         donation.added_by = added_by
+    if amount:
+        donation.amount = amount
     db.session.add(donation)
     db.session.commit()
     return jsonify(donation.serialize)
 
 
 # Delete Donation (#why_so_heartless)
-@donation.route("/<donation_uuid>", methods=["DELETE"])
+@donation.route("/<uuid:donation_uuid>", methods=["DELETE"])
 def delete_donation(donation_uuid):
     donation = Donation.query.get(donation_uuid)
-    if donation:
+    if donation is None:
         abort(404, "No donation found with specified UUID")
     db.session.delete(donation)
     db.session.commit()
