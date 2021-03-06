@@ -304,7 +304,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": None,
                 "name": "",
                 "type": "",
-                "is_completed" : "",
+                "is_completed" : "False",
             },
         )
 
