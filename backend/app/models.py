@@ -77,6 +77,7 @@ class Project(db.Model):
     year = db.Column(db.Integer)
     name = db.Column(db.String(64))
     type = db.Column(db.String(64))
+    is_completed = db.Column(db.Boolean, nullable=False)
     contacts = db.relationship(
         "Contact",
         secondary=association,
@@ -98,6 +99,7 @@ class Project(db.Model):
             "name": self.name,
             "type": self.type,
             "contacts": Contact.serialize_list(self.contacts),
+            "is_completed": self.is_completed,
         }
 
     @staticmethod
