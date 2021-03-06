@@ -56,7 +56,7 @@ def edit_contact_type(id):
     contact_type = ContactType.query.filter_by(id=id).first()
     if contact_type is None:
         abort(404, "No contact type found with specified ID.")
-    
+
     if hex_colour is not None:
         if hex_colour == "":
             abort(400, "Invalid input")
@@ -67,7 +67,6 @@ def edit_contact_type(id):
             abort(400, "Invalid input")
         contact_type.type = type
 
-    
     if description is not None:
         if description == "":
             abort(400, "Invalid input")
