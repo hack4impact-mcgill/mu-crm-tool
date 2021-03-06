@@ -32,7 +32,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type="dummy type",
             contacts=[],
-            is_completed = False,
+            is_completed = True,
         )
         db.session.add(p)
         db.session.commit()
@@ -275,7 +275,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": 2020,
                 "name": "dummy name 2",
                 "type": "dummy type 2",
-                "is_completed" : "False",
+                "is_completed" : "false",
             },
         )
         response2 = self.client.post(
@@ -289,7 +289,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": 2020,
                 "name": "dummy name",
                 "type": "dummy type",
-                "is_completed" : "False",
+                "is_completed" : "false",
             },
         )
 
@@ -304,7 +304,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": None,
                 "name": "",
                 "type": "",
-                "is_completed" : "False",
+                "is_completed" : "",
             },
         )
 
