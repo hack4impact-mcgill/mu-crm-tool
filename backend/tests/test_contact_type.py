@@ -129,10 +129,10 @@ class ContactTypeTestCase(unittest.TestCase):
         db.session.add(ct_3)
         db.session.commit()
 
-        returned_json = self.client.get("/contact_type")
-        self.assertEqual(returned_json.status_code, 200)
+        response = self.client.get("/contact_type")
+        self.assertEqual(response.status_code, 200)
 
-        json_data = returned_json.get_json()
+        json_data = response.get_json()
         self.assertEqual(len(json_data), 3)
 
         self.assertEqual(json_data[0]["type"], "dummy type")
