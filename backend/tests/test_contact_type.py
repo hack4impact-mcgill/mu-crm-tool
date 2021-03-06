@@ -38,6 +38,107 @@ class ContactTypeTestCase(unittest.TestCase):
         response = self.client.delete("/contact_type/{}".format(ct_id))
         self.assertEqual(response.status_code, 404)
 
+    def test_create_contact_type_route(self):
+        # creating a contact_type with valid arguments
+        valid_response = self.client.post(
+            "/contact_type",
+            json={
+                "hex_colour": "#f0f8ff",
+                "type": "dummy type",
+                "description": "dummy description",
+            },
+        )
+
+        # creating a contact_type with valid arguments
+        valid_response2 = self.client.post(
+            "/contact_type",
+            json={
+                "hex_colour": "#ffffff",
+                "type": "new dummy type",
+                "description": "new dummy description",
+            },
+        )
+
+        # creating a contact_type with valid arguments
+        valid_response3 = self.client.post(
+            "/contact_type",
+            json={
+                "hex_colour": "#ffffff",
+                "type": "dummy type 3",
+                "description": "dummy description 3",
+            },
+        )
+
+        # creating a contact_type with empty arguments
+        empty_response = self.client.post(
+            "/contact_type",
+            json={
+                "hex_colour": "",
+                "type": "",
+                "description": "",
+            },
+        )
+
+        # checking that the tests worked
+        self.assertEqual(valid_response.status_code, 200)
+        self.assertEqual(valid_response2.status_code, 200)
+        self.assertEqual(valid_response3.status_code, 200)
+        self.assertEqual(empty_response.status_code, 400)
+
+        types = ContactType.query.all()
+        first_type = types[0]
+        second_type = types[1]
+        third_type = types[2]
+
+        # checking that the valid responses have two unique ids
+        self.assertNotEqual(first_type.id, second_type.id)
+
+        self.assertEqual(first_type.type, "dummy type")
+        self.assertEqual(second_type.hex_colour, "#ffffff")
+        self.assertEqual(third_type.description, "dummy description 3")
+
+    # testing get all contact types endpoint
+    def test_get_all_contact_types_route(self):
+        ct_id1 = uuid.uuid4()
+        ct_1 = ContactType(
+            id=ct_id1,
+            hex_colour="#C414C7",
+            type="dummy type",
+            description="dummy description",
+        )
+        db.session.add(ct_1)
+        db.session.commit()
+
+        ct_id2 = uuid.uuid4()
+        ct_2 = ContactType(
+            id=ct_id2,
+            hex_colour="#FFFFFF",
+            type="new dummy type",
+            description="new dummy description",
+        )
+        db.session.add(ct_2)
+        db.session.commit()
+
+        ct_id3 = uuid.uuid4()
+        ct_3 = ContactType(
+            id=ct_id3,
+            hex_colour="#FF5733",
+            type="different dummy type",
+            description="different dummy description",
+        )
+        db.session.add(ct_3)
+        db.session.commit()
+
+        response = self.client.get("/contact_type")
+        self.assertEqual(response.status_code, 200)
+
+        json_data = response.get_json()
+        self.assertEqual(len(json_data), 3)
+
+        self.assertEqual(json_data[0]["type"], "dummy type")
+        self.assertEqual(json_data[1]["hex_colour"], "#FFFFFF")
+        self.assertEqual(json_data[2]["description"], "different dummy description")
+
     def test_get_contacts_by_contact_type(self):
         ct_id = uuid.uuid4()
 

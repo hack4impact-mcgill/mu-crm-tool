@@ -167,6 +167,13 @@ class ContactType(db.Model):
             "description": self.description,
         }
 
+    @staticmethod
+    def serialize_list(contact_types):
+        json_contact_types = []
+        for contact_type in contact_types:
+            json_contact_types.append(contact_type.serialize)
+        return json_contact_types
+
 
 # MuUser Domain Model Class
 class MuUser(db.Model):
