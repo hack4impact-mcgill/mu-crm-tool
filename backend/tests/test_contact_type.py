@@ -197,7 +197,8 @@ class ContactTypeTestCase(unittest.TestCase):
         db.session.commit()
 
         # update a contact_type with empty arguments
-        response = self.client.put("/contact_type/{}".format(ct_id),
+        response = self.client.put(
+            "/contact_type/{}".format(ct_id),
             content_type="application/json",
             data=json.dumps({}),
         )
@@ -211,10 +212,10 @@ class ContactTypeTestCase(unittest.TestCase):
         }
 
         # edit a contact_type does exist
-        response = self.client.put("/contact_type/{}".format(ct_id),
+        response = self.client.put(
+            "/contact_type/{}".format(ct_id),
             content_type="application/json",
-            data=json.dumps(edited_ct)
-
+            data=json.dumps(edited_ct),
         )
         self.assertEqual(response.status_code, 200)
 

@@ -43,6 +43,7 @@ def delete_contact_type(id):
 
     return jsonify(contact_type.serialize)
 
+
 # edit a contact_type by id
 @contact_type.route("/<uuid:id>", methods=["PUT"])
 def edit_contact_type(id):
@@ -64,7 +65,7 @@ def edit_contact_type(id):
 
     if description is not None:
         contact_type.description = description
-    
+
     if contacts is not None:
         contact_type.contacts = contacts
 
@@ -74,6 +75,7 @@ def edit_contact_type(id):
     db.session.add(contact_type)
     db.session.commit()
     return jsonify(contact_type.serialize)
+
 
 # get all contacts by contact_type
 @contact_type.route("/<uuid:id>/contacts", methods=["GET"])
