@@ -275,7 +275,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": 2020,
                 "name": "dummy name 2",
                 "type": "dummy type 2",
-                "is_completed" : "false",
+                "is_completed" : "False",
             },
         )
         response2 = self.client.post(
@@ -289,7 +289,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": 2020,
                 "name": "dummy name",
                 "type": "dummy type",
-                "is_completed" : "false",
+                "is_completed" : "False",
             },
         )
 
@@ -304,7 +304,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": None,
                 "name": "",
                 "type": "",
-                "is_completed" : "",
+                "is_completed" : "False",
             },
         )
 
