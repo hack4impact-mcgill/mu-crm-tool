@@ -126,7 +126,7 @@ def update_project(id):
 
     if type is not None:
         project.type = type
-    
+
     if is_completed is not None:
         project.is_completed = is_completed
 

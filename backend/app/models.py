@@ -99,7 +99,7 @@ class Project(db.Model):
             "name": self.name,
             "type": self.type,
             "contacts": Contact.serialize_list(self.contacts),
-            "is_completed" : self.is_completed
+            "is_completed": self.is_completed,
         }
 
     @staticmethod
