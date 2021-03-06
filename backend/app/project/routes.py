@@ -16,6 +16,7 @@ def create_project():
     year = data.get("year")
     name = data.get("name")
     type = data.get("type")
+    is_completed = data.get("is_completed")
 
     # check if all fields are empty, if so it's a garbage post
     if (
@@ -27,6 +28,7 @@ def create_project():
         and year is None
         and name == ""
         and type == ""
+        and (is_completed == False or is_completed == True)
     ):
         abort(400, "Cannot have all empty fields for a new project")
 
@@ -39,6 +41,7 @@ def create_project():
         year=year,
         name=name,
         type=type,
+        is_completed=is_completed,
     )
 
     db.session.add(new_project)
@@ -94,6 +97,7 @@ def update_project(id):
     year = data.get("year")
     name = data.get("name")
     type = data.get("type")
+    is_completed = data.get("is_completed")
 
     project = Project.query.filter_by(id=id).first()
     if project is None:
@@ -122,6 +126,9 @@ def update_project(id):
 
     if type is not None:
         project.type = type
+    
+    if is_completed is not None:
+        project.is_completed = is_completed
 
     if not data:
         abort(400, "No fields to update")
