@@ -275,7 +275,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": 2020,
                 "name": "dummy name 2",
                 "type": "dummy type 2",
-                "is_completed" : False,
+                "is_completed" : True,
             },
         )
         response2 = self.client.post(
