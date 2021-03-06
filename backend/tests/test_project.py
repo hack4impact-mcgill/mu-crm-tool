@@ -55,7 +55,7 @@ class ProjectTestCase(unittest.TestCase):
             "year": 2021,
             "name": "new dummy name",
             "type": "new dummy type",
-            "is_completed" : "True",
+            "is_completed" : True,
         }
         response = self.client.put(
             "/project/{}".format(p_id),
@@ -159,7 +159,7 @@ class ProjectTestCase(unittest.TestCase):
             "name": "dummy name",
             "type": test_list[1],
             "contacts": [],
-            "is_completed" : "False",
+            "is_completed" : False,
         }
         # test empty type param
         response = self.client.get("/project?type=")
@@ -275,7 +275,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": 2020,
                 "name": "dummy name 2",
                 "type": "dummy type 2",
-                "is_completed" : "False",
+                "is_completed" : False,
             },
         )
         response2 = self.client.post(
@@ -289,7 +289,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": 2020,
                 "name": "dummy name",
                 "type": "dummy type",
-                "is_completed" : "False",
+                "is_completed" : False,
             },
         )
 
@@ -304,7 +304,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": None,
                 "name": "",
                 "type": "",
-                "is_completed" : "False",
+                "is_completed" : False,
             },
         )
 
