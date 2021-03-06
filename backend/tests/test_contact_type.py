@@ -219,6 +219,20 @@ class ContactTypeTestCase(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
+        # empty arguments for a contact tyoe that exists
+        empty_ct = {
+            "hex_colour": "",
+            "type": "",
+            "description": "",
+        }
+
+        response = self.client.put(
+            "/contact_type/{}".format(ct_id),
+            content_type="application/json",
+            data=json.dumps(empty_ct),
+        )
+        self.assertEqual(response.status_code, 400)
+
         # editing a contact_type that doesn't exist
         response = self.client.put(
             "/contact_type/{}".format(uuid.uuid4()),
