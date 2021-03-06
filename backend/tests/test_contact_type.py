@@ -184,3 +184,59 @@ class ContactTypeTestCase(unittest.TestCase):
         actual_ids = [json_response[0]["id"], json_response[1]["id"]]
         expected_ids = [str(c0_id), str(c1_id)]
         self.assertCountEqual(expected_ids, actual_ids)
+
+    def test_edit_contact_type_route(self):
+        ct_id = uuid.uuid4()
+        ct = ContactType(
+            id=ct_id,
+            hex_colour="#C414C7",
+            type="dummy type",
+            description="dummy description",
+        )
+        db.session.add(ct)
+        db.session.commit()
+
+        # update a contact_type with empty arguments
+        response = self.client.put(
+            "/contact_type/{}".format(ct_id),
+            content_type="application/json",
+            data=json.dumps({}),
+        )
+        self.assertEqual(response.status_code, 400)
+
+        # new arguments for contact_type
+        edited_ct = {
+            "hex_colour": "#ffffff",
+            "type": "new dummy type",
+            "description": "new dummy description",
+        }
+
+        # edit a contact_type does exist
+        response = self.client.put(
+            "/contact_type/{}".format(ct_id),
+            content_type="application/json",
+            data=json.dumps(edited_ct),
+        )
+        self.assertEqual(response.status_code, 200)
+
+        # empty arguments for a contact tyoe that exists
+        empty_ct = {
+            "hex_colour": "",
+            "type": "",
+            "description": "",
+        }
+
+        response = self.client.put(
+            "/contact_type/{}".format(ct_id),
+            content_type="application/json",
+            data=json.dumps(empty_ct),
+        )
+        self.assertEqual(response.status_code, 400)
+
+        # editing a contact_type that doesn't exist
+        response = self.client.put(
+            "/contact_type/{}".format(uuid.uuid4()),
+            content_type="application/json",
+            data=json.dumps(edited_ct),
+        )
+        self.assertEqual(response.status_code, 404)
