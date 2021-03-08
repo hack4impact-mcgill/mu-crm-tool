@@ -62,6 +62,7 @@ def update_donation(donation_uuid):
         and num_tickets is None
         and (added_by == "" or added_by is None)
         and (amount is None)
+        and (data == {})
     ):
         abort(400, "No donation fields to update")
     if name:
