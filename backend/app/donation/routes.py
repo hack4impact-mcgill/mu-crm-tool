@@ -10,8 +10,7 @@ from datetime import datetime
 def create_donation():
     # Load request to data
     data = request.get_json(force=True)
-    # Assign id new uuid, and set date to now
-    id = uuid.uuid4()
+    # Set date to now
     date = datetime.now()
     # Load data to the corresponding variables
     name = data.get("name")
@@ -22,10 +21,9 @@ def create_donation():
     added_by = data.get("added_by")
     amount = data.get("amount")
     # Check if nullable=False columns are empty
-    if name == "" or donation_source == "" or email == "":
+    if name == "" or donation_source == "" or email == "" or data == {}:
         abort(400, "Name, doantion_source, and email can not be empty")
     new_donation = Donation(
-        id=id,
         name=name,
         email=email,
         date=date,
