@@ -113,7 +113,7 @@ class Project(db.Model):
         return "<Project %r>" % self.id
 
 
-contact_types = db.Table(
+belongs_to = db.Table(
     "belongs_to",
     db.Column(
         "contact_id",
@@ -146,7 +146,7 @@ class Contact(db.Model):
     # many to one realtionship with contact_type
     contact_types = db.relationship(
         "ContactType",
-        secondary=contact_types,
+        secondary=belongs_to,
         lazy="subquery",
         backref=db.backref("contacts", lazy=True),
     )
