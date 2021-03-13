@@ -32,6 +32,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type="dummy type",
             contacts=[],
+            is_completed=True,
         )
         db.session.add(p)
         db.session.commit()
@@ -54,6 +55,7 @@ class ProjectTestCase(unittest.TestCase):
             "year": 2021,
             "name": "new dummy name",
             "type": "new dummy type",
+            "is_completed": True,
         }
         response = self.client.put(
             "/project/{}".format(p_id),
@@ -84,6 +86,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type=test_list[0],
             contacts=[],
+            is_completed=False,
         )
         p2 = Project(
             address="dummy address",
@@ -95,6 +98,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type=test_list[1],
             contacts=[],
+            is_completed=False,
         )
         db.session.add_all([p1, p2])
         db.session.commit()
@@ -116,6 +120,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type=test_list[0],
             contacts=[],
+            is_completed=False,
         )
         p2 = Project(
             address="dummy address",
@@ -127,6 +132,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type=test_list[1],
             contacts=[],
+            is_completed=False,
         )
         p3 = Project(
             address="dummy address",
@@ -138,6 +144,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type=test_list[0],
             contacts=[],
+            is_completed=False,
         )
         db.session.add_all([p1, p2, p3])
         db.session.commit()
@@ -152,6 +159,7 @@ class ProjectTestCase(unittest.TestCase):
             "name": "dummy name",
             "type": test_list[1],
             "contacts": [],
+            "is_completed": False,
         }
         # test empty type param
         response = self.client.get("/project?type=")
@@ -180,6 +188,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type="dummy type",
             contacts=[],
+            is_completed=False,
         )
 
         p2_id = uuid.uuid4()
@@ -194,6 +203,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name 2",
             type="dummy type 2",
             contacts=[],
+            is_completed=False,
         )
         db.session.add_all([p, p2])
         db.session.commit()
@@ -242,6 +252,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type="dummy type",
             contacts=[c],
+            is_completed=False,
         )
         db.session.add(p)
         db.session.commit()
@@ -264,6 +275,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": 2020,
                 "name": "dummy name 2",
                 "type": "dummy type 2",
+                "is_completed": True,
             },
         )
         response2 = self.client.post(
@@ -277,6 +289,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": 2020,
                 "name": "dummy name",
                 "type": "dummy type",
+                "is_completed": False,
             },
         )
 
@@ -291,6 +304,7 @@ class ProjectTestCase(unittest.TestCase):
                 "year": None,
                 "name": "",
                 "type": "",
+                "is_completed": False,
             },
         )
 
@@ -345,6 +359,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type="dummy type",
             contacts=[c0, c1],
+            is_completed=False,
         )
         db.session.add(p)
         db.session.commit()
