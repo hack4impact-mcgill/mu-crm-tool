@@ -52,7 +52,7 @@ association = db.Table(
     db.Column(
         "contact_id",
         UUID(as_uuid=True),
-        db.ForeignKey("contact.id"),
+        db.ForeignKey("contacts.id"),
         primary_key=True,
         default=uuid.uuid4,
     ),
@@ -113,8 +113,28 @@ class Project(db.Model):
         return "<Project %r>" % self.id
 
 
+belongs_to = db.Table(
+    "belongs_to",
+    db.Column(
+        "contact_id",
+        UUID(as_uuid=True),
+        db.ForeignKey("contacts.id"),
+        primary_key=True,
+        default=uuid.uuid4,
+    ),
+    db.Column(
+        "contact_type_id",
+        UUID(as_uuid=True),
+        db.ForeignKey("contact_types.id"),
+        primary_key=True,
+        default=uuid.uuid4,
+    ),
+)
+
+
 # Contact Model
 class Contact(db.Model):
+    __tablename__ = "contacts"
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4())
     name = db.Column(db.String(256), nullable=False)
     email = db.Column(db.String(256), nullable=False)
@@ -124,8 +144,11 @@ class Contact(db.Model):
     organization = db.Column(db.String(256), nullable=False)
     neighbourhood = db.Column(db.String(256))
     # many to one realtionship with contact_type
-    contact_type = db.Column(
-        UUID(as_uuid=True), db.ForeignKey("contact_types.id"), nullable=False
+    contact_types = db.relationship(
+        "ContactType",
+        secondary=belongs_to,
+        lazy="subquery",
+        backref=db.backref("contacts", lazy=True),
     )
 
     @property
@@ -158,7 +181,6 @@ class ContactType(db.Model):
     hex_colour = db.Column(db.String(8))
     type = db.Column(db.String(64))
     description = db.Column(db.String(512))
-    contacts = db.relationship("Contact", backref="contact_types", lazy=True)
 
     @property
     def serialize(self):
