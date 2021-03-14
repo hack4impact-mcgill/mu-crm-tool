@@ -175,7 +175,6 @@ class ProjectTestCase(unittest.TestCase):
 
     # test get endpoint by completion status
     def test_get_projects_by_completion_status(self):
-        test_list = [True, False]
         p1 = Project(
             address="dummy address",
             city="dummy city",
@@ -186,7 +185,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type="dummy type",
             contacts=[],
-            is_completed=test_list[0],
+            is_completed=True,
         )
         p2 = Project(
             address="dummy address",
@@ -198,7 +197,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type="dummy type2",
             contacts=[],
-            is_completed=test_list[0],
+            is_completed=True,
         )
         p3 = Project(
             address="dummy address",
@@ -210,7 +209,7 @@ class ProjectTestCase(unittest.TestCase):
             name="dummy name",
             type="dummy type2",
             contacts=[],
-            is_completed=test_list[1],
+            is_completed=False,
         )
         db.session.add_all([p1, p2, p3])
         db.session.commit()
@@ -225,7 +224,7 @@ class ProjectTestCase(unittest.TestCase):
             "name": "dummy name",
             "type": "dummy type",
             "contacts": [],
-            "is_completed": test_list[0],
+            "is_completed": True,
         }
         tester2 = {
             "address": "dummy address",
@@ -237,7 +236,7 @@ class ProjectTestCase(unittest.TestCase):
             "name": "dummy name",
             "type": "dummy type2",
             "contacts": [],
-            "is_completed": test_list[1],
+            "is_completed": False,
         }
         tester3 = {
             "address": "dummy address",
@@ -249,19 +248,19 @@ class ProjectTestCase(unittest.TestCase):
             "name": "dummy name",
             "type": "dummy type2",
             "contacts": [],
-            "is_completed": test_list[0],
+            "is_completed": True,
         }
         # testing missing param
         response = self.client.get("/project?is-completed=")
         self.assertEqual(response.status_code, 404)
 
         # testing only get by completion status
-        response2 = self.client.get("/project?is-completed={}".format(test_list[0]))
+        response2 = self.client.get("/project?is-completed={}".format(True))
         json_response2 = json.loads(response2.get_data(as_text=True))
         self.assertEqual(len(json_response2), 2)
         self.assertDictContainsSubset(tester1, json_response2[0])
 
-        response3 = self.client.get("/project?is-completed={}".format(test_list[1]))
+        response3 = self.client.get("/project?is-completed={}".format(False))
         json_response3 = json.loads(response3.get_data(as_text=True))
         self.assertEqual(len(json_response3), 1)
         self.assertDictContainsSubset(tester2, json_response3[0])
