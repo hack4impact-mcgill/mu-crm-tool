@@ -173,7 +173,106 @@ class ProjectTestCase(unittest.TestCase):
         json_response = json.loads(response3.get_data(as_text=True))
         self.assertEqual(len(json_response), 2)
 
+    # test get endpoint by completion status
+    def test_get_projects_by_completion_status(self):
+        p1 = Project(
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
+            type="dummy type",
+            contacts=[],
+            is_completed=True,
+        )
+        p2 = Project(
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
+            type="dummy type2",
+            contacts=[],
+            is_completed=True,
+        )
+        p3 = Project(
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood="dummy neighbourhood",
+            year=2020,
+            name="dummy name",
+            type="dummy type2",
+            contacts=[],
+            is_completed=False,
+        )
+        db.session.add_all([p1, p2, p3])
+        db.session.commit()
+
+        tester1 = {
+            "address": "dummy address",
+            "city": "dummy city",
+            "province": "dummy province",
+            "postal_code": "dummy postal_code",
+            "neighbourhood": "dummy neighbourhood",
+            "year": 2020,
+            "name": "dummy name",
+            "type": "dummy type",
+            "contacts": [],
+            "is_completed": True,
+        }
+        tester2 = {
+            "address": "dummy address",
+            "city": "dummy city",
+            "province": "dummy province",
+            "postal_code": "dummy postal_code",
+            "neighbourhood": "dummy neighbourhood",
+            "year": 2020,
+            "name": "dummy name",
+            "type": "dummy type2",
+            "contacts": [],
+            "is_completed": False,
+        }
+        tester3 = {
+            "address": "dummy address",
+            "city": "dummy city",
+            "province": "dummy province",
+            "postal_code": "dummy postal_code",
+            "neighbourhood": "dummy neighbourhood",
+            "year": 2020,
+            "name": "dummy name",
+            "type": "dummy type2",
+            "contacts": [],
+            "is_completed": True,
+        }
+        # testing missing param
+        response = self.client.get("/project?is-completed=")
+        self.assertEqual(response.status_code, 404)
+
+        # testing only get by completion status
+        response2 = self.client.get("/project?is-completed={}".format(True))
+        json_response2 = json.loads(response2.get_data(as_text=True))
+        self.assertEqual(len(json_response2), 2)
+        self.assertDictContainsSubset(tester1, json_response2[0])
+
+        response3 = self.client.get("/project?is-completed={}".format(False))
+        json_response3 = json.loads(response3.get_data(as_text=True))
+        self.assertEqual(len(json_response3), 1)
+        self.assertDictContainsSubset(tester2, json_response3[0])
+
+        # testing get by completion status with type filtering
+        response4 = self.client.get("/project?is-completed=True&type=dummy type2")
+        json_response4 = json.loads(response4.get_data(as_text=True))
+        self.assertEqual(len(json_response4), 1)
+        self.assertDictContainsSubset(tester3, json_response4[0])
+
     # test get_all_projects endpoint
+
     def test_get_all_projects(self):
         # pre-populate database
         p_id = uuid.uuid4()

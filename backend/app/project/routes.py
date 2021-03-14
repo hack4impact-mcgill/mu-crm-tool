@@ -70,6 +70,21 @@ def get_projects():
 
         projects = list(filter(lambda project: (project.type == type), projects))
 
+    is_completed = request.args.get("is-completed")
+    if is_completed is not None:
+        if is_completed == "":
+            abort(404, "completion status invalid")
+
+        # query param is of string type, therefore must convert to boolean first
+        if is_completed.lower() == "true":
+            is_completed = True
+        else:
+            is_completed = False
+
+        projects = list(
+            filter(lambda project: (project.is_completed == is_completed), projects)
+        )
+
     # add additional request arguments below
 
     return jsonify(Project.serialize_list(projects))
