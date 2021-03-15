@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LandingPage: React.FC = () => {
+const Home: React.FC = () => {
     return (
         <div>
             HI
@@ -8,4 +8,4 @@ const LandingPage: React.FC = () => {
     )
 }
 
-export default LandingPage;
+export default Home;
