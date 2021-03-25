@@ -68,7 +68,8 @@ def get_projects():
         if type == "":
             abort(404, "Project type invalid")
 
-        projects = list(filter(lambda project: (project.type == type), projects))
+        projects = list(filter(lambda project: (
+            project.type == type), projects))
 
     is_completed = request.args.get("is-completed")
     if is_completed is not None:

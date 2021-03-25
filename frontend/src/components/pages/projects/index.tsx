@@ -1,16 +1,13 @@
 import React from 'react';
-import InProgress from "./components/inProgress";
+import InProgress from "./components/in_progress";
 import Completed from "./components/completed";
 
 
 const Projects: React.FC = () => {
     return (
-        <div> 
-            <h1>In Progress</h1>
+        <div>
             <InProgress/>
-            <h1>Completed</h1>
             <Completed/>
-            <p>Tarbarnak</p>
         </div>
     )
 }
