@@ -29,13 +29,14 @@ const Filters: React.FC = () => {
     // set things on start up
     useEffect(() => {
         getTypes();
-        getNeighbourhoods;
+        getNeighbourhoods();
     },[]
     )
+    
 
     return (
         <div>   
-            
+            <p>Not quite done yet</p>
         </div>
     );
 }

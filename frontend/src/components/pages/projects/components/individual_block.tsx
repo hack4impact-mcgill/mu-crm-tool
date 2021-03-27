@@ -1,5 +1,5 @@
 import React from 'react';
-import MuIcon from "../../../statics/MuIcon.jpg";
+import MuIcon from "../../../../static/MuIcon.jpg";
 import { Project } from "./completed";
 import Chip from '@material-ui/core/Chip';
 
