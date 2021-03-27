@@ -1,7 +1,8 @@
-from flask import jsonify, abort
+from flask import jsonify, abort, request
 from app import db
-from app.models import Contact
+from app.models import Contact, ContactType
 from . import contact
+import uuid
 
 # create a contact
 @contact.route("", methods=["POST"])
