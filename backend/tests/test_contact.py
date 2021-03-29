@@ -56,9 +56,22 @@ class ContactTestCase(unittest.TestCase):
         # deleting a contact that does not exist
         response = self.client.delete("/contact/{}".format(c_id))
         self.assertEqual(response.status_code, 404)
+<<<<<<< HEAD
 
 
     def test_edit_a_contact(self):
+=======
+        
+    def test_edit_a_contact(self):
+        dummy_ct_id = uuid.uuid4()
+        dummy_ct = ContactType(
+            id=dummy_ct_id,
+            hex_colour="#ffffff",
+            type="dummy type",
+            description="dummy description",
+        )
+
+>>>>>>> e12ae16f8cfe37755b9137c16f7f3b4d1db45d01
         c_id = uuid.uuid4()
         c = Contact(
             id=c_id,
@@ -69,6 +82,7 @@ class ContactTestCase(unittest.TestCase):
             role="dummy role",
             organization="dummy organization",
             neighbourhood="dummy neighbourhood",
+<<<<<<< HEAD
         )
 
         dummy_ct_id = uuid.uuid4()
@@ -100,10 +114,22 @@ class ContactTestCase(unittest.TestCase):
         # edit a contact with valid arguments
         response = self.client.put(
             "/contact/{}".format(c_id),
+=======
+            contact_type=dummy_ct,
+        )
+
+        db.session.add(c)
+        db.session.commit()
+
+        # edit a contact with valid arguments
+        response = self.client.put(
+            "/contact/{}/edit".format(c_id),
+>>>>>>> e12ae16f8cfe37755b9137c16f7f3b4d1db45d01
             content_type="application/json",
             data=json.dumps(update_obj),
         )
         self.assertEqual(response.status_code, 200)
+<<<<<<< HEAD
         json_response = json.loads(response.get_data(as_text=True))
         self.assertDictContainsSubset(update_obj, json_response)
 
@@ -136,7 +162,19 @@ class ContactTestCase(unittest.TestCase):
         # edit a contact that does not exist
         response = self.client.put(
             "/contact/{}".format(uuid.uuid4()),
+=======
+        json_response = json.loads(response.get_data(asText=True))
+        self.assertDictContainsSubset(update_obj, json_response)
+
+        # edit a contact that does not exist
+        response = self.client.put(
+            "/contact/{}/edit".format(uuid.uuid4()),
+>>>>>>> e12ae16f8cfe37755b9137c16f7f3b4d1db45d01
             content_type="application/json",
             data=json.dumps({}),
         )
         self.assertEqual(response.status_code, 404)
+<<<<<<< HEAD
+=======
+       
+>>>>>>> e12ae16f8cfe37755b9137c16f7f3b4d1db45d01

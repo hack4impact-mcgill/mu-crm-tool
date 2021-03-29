@@ -52,8 +52,11 @@ def delete_contact_type(id):
 
     return jsonify(contact.serialize)
 
+<<<<<<< HEAD
 
 # edit a contact
+=======
+>>>>>>> e12ae16f8cfe37755b9137c16f7f3b4d1db45d01
 @contact.route("/<uuid:id>", methods=["PUT"])
 def edit_contact(id):
     contact = Contact.query.filter_by(id=id).first()
@@ -69,12 +72,16 @@ def edit_contact(id):
     organization = data.get("organization")
     neighbourhood = data.get("neighbourhood")
     projects = data.get("projects")
+<<<<<<< HEAD
     # if all values are None, nones = True, if not nones = False 
     nones = not all(data.values())
 
     if not data or nones or (name == "" and email == "" and secondary_email == "" and cellphone == "" and
     role == "" and organization == "" and neighbourhood == ""):
         abort(400, "No fields to update")
+=======
+    contact_type = data.get("contact_type")
+>>>>>>> e12ae16f8cfe37755b9137c16f7f3b4d1db45d01
 
     if (name is not None and name != ""):
         contact.name = name
@@ -97,6 +104,15 @@ def edit_contact(id):
     if (neighbourhood is not None and neighbourhood != ""):
         contact.neighbourhood = neighbourhood
 
+<<<<<<< HEAD
+=======
+    if (contact_type is not None and contact_type != ""):
+        contact.contact_type = contact.contact_type
+
+    if not data:
+        abort(400, "No fields to update")
+    
+>>>>>>> e12ae16f8cfe37755b9137c16f7f3b4d1db45d01
     db.session.add(contact)
     db.session.commit()
 
