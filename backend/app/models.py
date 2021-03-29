@@ -134,6 +134,7 @@ class Contact(db.Model):
             "email": self.email,
             "secondary_email": self.secondary_email,
             "cellphone": self.cellphone,
+            "role": self.role,
             "organization": self.organization,
             "neighbourhood": self.neighbourhood,
         }
