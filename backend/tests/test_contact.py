@@ -104,12 +104,9 @@ class ContactTestCase(unittest.TestCase):
             "neighbourhood": "edited neighbourhood",
         }
 
-        db.session.add(c)
-        db.session.commit()
-
         # edit a contact with valid arguments
         response = self.client.put(
-            "/contact/{}/edit".format(c_id),
+            "/contact/{}".format(c_id),
             content_type="application/json",
             data=json.dumps(update_obj),
         )
