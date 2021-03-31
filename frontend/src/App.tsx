@@ -1,8 +1,9 @@
 import React from "react";
 import "./App.css";
+import "./LogIn.css";
 import LogIn from "./LogIn";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <div
@@ -17,6 +18,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;

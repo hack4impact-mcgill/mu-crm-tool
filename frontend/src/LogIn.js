@@ -6,9 +6,6 @@ import Logo from "./logo.png";
 export default class LogIn extends React.Component {
   state = {
     // as people type in the form, update the state, have the changes reflected in the form
-    firstName: "", // default value
-    lastName: "", // value is set, so won't let you change it
-    username: "",
     email: "",
     password: "",
   };
@@ -27,7 +24,6 @@ export default class LogIn extends React.Component {
     //this.props.onSubmit(this.state);
     this.setState({
       // as people type in the form, update the state, have the changes reflected in the form
-      username: "",
       email: "",
       password: "",
     });
@@ -35,7 +31,6 @@ export default class LogIn extends React.Component {
     // code for coherency (can remove)
     this.props.onChange({
       // as people type in the form, update the state, have the changes reflected in the form
-      username: "",
       email: "",
       password: "",
     });
@@ -69,7 +64,15 @@ export default class LogIn extends React.Component {
         </label>
         <button color="#00000" onClick={(e) => this.onSubmit(e)}>
           Submit
-        </button>
+        </button>{" "}
+        <p
+          onClick={() => {
+            console.log("");
+          }}
+          style={{ fontSize: "10px" }}
+        >
+          <u>Forgot your password?</u>
+        </p>
       </form>
     );
   }
