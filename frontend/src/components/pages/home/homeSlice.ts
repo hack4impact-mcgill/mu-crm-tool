@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../../redux/store'
-import axios from '../../../api/axios'
+import axios from '../../../shared/axios'
 
 interface HomeState {
     count: number,
