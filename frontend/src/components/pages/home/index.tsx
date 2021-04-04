@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@material-ui/core/Button'
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks'
-import { decrement, increment, selectHome } from './homeSlice'
+import { 
+    decrement, 
+    increment, 
+    getProjects, 
+    selectHome,
+    selectProjects
+} from './homeSlice'
 
 
 const Home: React.FC = () => {
     const count = useAppSelector(selectHome)
+    const projects = useAppSelector(selectProjects)
     const dispatch = useAppDispatch()
+    useEffect(() => {
+        dispatch(getProjects())
+    }, [dispatch])
 
     const onIncrement = () => {
         dispatch(increment())
@@ -33,6 +43,11 @@ const Home: React.FC = () => {
             >
                 decrement
             </Button>
+            {projects.map((project, _) => (
+                <div>
+                    {project.id}
+                </div>
+            ))}
         </div>
     )
 }

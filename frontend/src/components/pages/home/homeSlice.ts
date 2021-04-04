@@ -1,20 +1,34 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../../redux/store'
+import axios from '../../../api/axios'
 
 interface HomeState {
-    count: number
+    count: number,
+    projects: any[]
+    status: 'idle' | 'pending' | 'succeeded' | 'failed',
+    error: string | null
 }
 
-const initialState: HomeState = {
-    count: 0
-}
+const initialState = {
+    count: 0,
+    projects: [],
+    status: 'idle',
+    error: null
+} as HomeState
+
+export const getProjects = createAsyncThunk(
+    'home/getProjects',
+    async () => {
+        const response = await axios.get('/project')
+        return response.data
+    }
+)
 
 export const homeSlice = createSlice({
     name: 'home',
     initialState,
     reducers: {
         increment: state => {
-            console.log('hi')
             state.count += 1
         },
         decrement: state => {
@@ -24,10 +38,24 @@ export const homeSlice = createSlice({
             state.count += action.payload
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(getProjects.pending,  (state, _) => {
+                state.status = 'pending'
+            })
+            .addCase(getProjects.fulfilled, (state, action) => {
+                state.projects = action.payload
+                state.status = 'succeeded'
+            })
+            .addCase(getProjects.rejected, (state, _) => {
+                state.status = 'failed'
+            })
+    },
 })
 
 export const { increment, decrement, incrementByAmount } = homeSlice.actions
 
 export const selectHome = (state: RootState) => state.home.count
+export const selectProjects = (state: RootState) => state.home.projects
 
 export default homeSlice.reducer
