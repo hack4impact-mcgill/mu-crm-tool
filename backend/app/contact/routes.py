@@ -49,7 +49,6 @@ def edit_contact(id):
         )
     ):
         abort(400, "No fields to update")
-    contact_type = data.get("contact_type")
 
     if name is not None and name != "":
         contact.name = name
@@ -71,12 +70,6 @@ def edit_contact(id):
 
     if neighbourhood is not None and neighbourhood != "":
         contact.neighbourhood = neighbourhood
-
-    if contact_type is not None and contact_type != "":
-        contact.contact_type = contact.contact_type
-
-    if not data:
-        abort(400, "No fields to update")
 
     db.session.add(contact)
     db.session.commit()
