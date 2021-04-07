@@ -36,9 +36,7 @@ def create_contact():
 
     ct = ContactType.query.filter_by(id=ct).first()
 
-    c_id = uuid.uuid4()
     new_contact = Contact(
-        id=c_id,
         name=name,
         email=email,
         secondary_email=secondary_email,

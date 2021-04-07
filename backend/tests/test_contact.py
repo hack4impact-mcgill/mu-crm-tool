@@ -70,19 +70,6 @@ class ContactTestCase(unittest.TestCase):
         db.session.add(dummy_ct)
         db.session.commit()
 
-        """
-        create_obj = {
-            "name": "dummy name",
-            "email": "dummy email",
-            "secondary_email": "dummy secondary email",
-            "cellphone": "dummy cell phone",
-            "role": "dummy role",
-            "organization": "dummy organization",
-            "neighbourhood": "dummy neighbourhood",
-            "contact_type": dummy_ct_id,
-        }
-        """
-
         # creating a contact with valid inputs
         response = self.client.post(
             "/contact",
@@ -98,10 +85,10 @@ class ContactTestCase(unittest.TestCase):
             },
         )
         self.assertEqual(response.status_code, 200)
+        c = json.loads(response.get_data(as_text=True))
 
-        # check that the contact has been properly added to the correct contact type
-        contact_type = ContactType.query.filter_by(id=dummy_ct_id).first()
-        self.assertEqual(len(contact_type.contacts), 1)
+        # check that the contact type has been properly added
+        contact_type = Contact.query.filter_by(id=c["id"]).first()
 
         # creating a contact with invalid fields
         response = self.client.post(
@@ -118,15 +105,6 @@ class ContactTestCase(unittest.TestCase):
             },
         )
         self.assertEqual(response.status_code, 400)
-        """
-        nullable_obj = {
-            "name": "dummy name",
-            "email": "dummy email",
-            "cellphone": "dummy cellphone",
-            "organization": "dummy organization",
-            "contact_type": dummy_ct_id,
-        }
-        """
 
         # creating a contact with only required fields
         response = self.client.post(
@@ -140,10 +118,10 @@ class ContactTestCase(unittest.TestCase):
             },
         )
         self.assertEqual(response.status_code, 200)
+        c = json.loads(response.get_data(as_text=True))
 
-        # check that the contact has been properly added to the correct contact type
-        contact_type = ContactType.query.filter_by(id=dummy_ct_id).first()
-        self.assertEqual(len(contact_type.contacts), 2)
+        # check that the contact has been properly added at the correct id
+        contact_type = Contact.query.filter_by(id=c["id"]).first()
 
         # creating a contact with empty fields
         response = self.client.post(
