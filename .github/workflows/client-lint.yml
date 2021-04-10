@@ -8,15 +8,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-      - name: Black
-        uses: psf/black@20.8b1
-
       - name: Prettier
         uses: creyD/prettier_action@v3.1
         with:
           dry: true
-          prettier_options: --check **/*.ts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
