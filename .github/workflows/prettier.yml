@@ -12,7 +12,11 @@ jobs:
         uses: actions/setup-node@v2
 
       - name: Install Prettier
-        run: npm i -g prettier
+        run: |
+          cd frontend
+          npm install prettier
 
       - name: Prettier
-        run: prettier --check **/*.ts
+        run: |
+          cd frontend
+          prettier --check **/*.ts
