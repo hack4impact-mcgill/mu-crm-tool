@@ -19,4 +19,4 @@ jobs:
       - name: Prettier
         run: |
           cd frontend
-          npx prettier --check **/*.{ts, tsx}
+          npx prettier --check "src/**/*.{ts,tsx}"
