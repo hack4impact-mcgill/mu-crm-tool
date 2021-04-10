@@ -15,6 +15,7 @@ def delete_contact_type(id):
 
     return jsonify(contact.serialize)
 
+
 # get a contact's contact types
 @contact.route("/<uuid:id>/contact-types", methods=["GET"])
 def get_contact_contact_types(id):
