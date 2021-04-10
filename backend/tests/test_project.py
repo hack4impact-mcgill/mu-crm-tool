@@ -43,7 +43,7 @@ class ProjectTestCase(unittest.TestCase):
             content_type="application/json",
             data=json.dumps({}),
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
 
         # update a project with valid arguments
         update_obj = {
