@@ -1,4 +1,4 @@
-name: Lint
+name: Client-Lint
 
 on: [pull_request]
 
