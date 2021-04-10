@@ -8,9 +8,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set up Node
+        uses: actions/setup-node@v2
+
+      - name: Install Prettier
+        run: npm i -g prettier
+
       - name: Prettier
-        uses: creyD/prettier_action@v3.1
-        with:
-          prettier_options: --check **/*.ts
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: prettier --check **/*.ts
