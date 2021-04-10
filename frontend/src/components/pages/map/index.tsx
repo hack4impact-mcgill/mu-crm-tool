@@ -1,9 +1,7 @@
-import React from "react"
+import React from "react";
 
 const MapPage: React.FC = () => {
-    return (
-        <div>map placeholder</div>
-    )
-}
+  return <div>map placeholder</div>;
+};
 
-export default MapPage
+export default MapPage;

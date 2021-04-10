@@ -1,9 +1,7 @@
-import React from "react"
+import React from "react";
 
 const DonorPage: React.FC = () => {
-    return (
-        <div>donors placeholder</div>
-    )
-}
+  return <div>donors placeholder</div>;
+};
 
-export default DonorPage
+export default DonorPage;

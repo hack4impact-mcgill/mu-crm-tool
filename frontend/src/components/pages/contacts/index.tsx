@@ -1,9 +1,7 @@
-import React from "react"
+import React from "react";
 
 const ContactPage: React.FC = () => {
-    return (
-        <div>contacts placeholder</div>
-    )
-}
+  return <div>contacts placeholder</div>;
+};
 
-export default ContactPage
+export default ContactPage;

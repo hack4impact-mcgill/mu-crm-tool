@@ -1,3 +1,6 @@
+[![Test](https://github.com/hack4impact-mcgill/mu-crm-tool/actions/workflows/test.yml/badge.svg)](https://github.com/hack4impact-mcgill/mu-crm-tool/actions/workflows/test.yml)
+[![client-lint](https://github.com/hack4impact-mcgill/mu-crm-tool/actions/workflows/prettier.yml/badge.svg)](https://github.com/hack4impact-mcgill/mu-crm-tool/actions/workflows/prettier.yml)
+[![server-lint](https://github.com/hack4impact-mcgill/mu-crm-tool/actions/workflows/black.yml/badge.svg)](https://github.com/hack4impact-mcgill/mu-crm-tool/actions/workflows/black.yml)
 # MU CRM Tool
 
 Managing a team building a CRM tool for a Montreal-based nonprofit. This tool allows employees of [MU](https://mumtl.org/) to keep track of their internal information more effectively. With features such as tracking their donations and managing their projects timelines.
