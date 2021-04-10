@@ -56,3 +56,47 @@ class ContactTestCase(unittest.TestCase):
         # deleting a contact that does not exist
         response = self.client.delete("/contact/{}".format(c_id))
         self.assertEqual(response.status_code, 404)
+
+    def test_get_contact_contact_types(self):
+        c_id = uuid.uuid4()
+
+        # get a non-existent contact's contact types
+        response = self.client.get("/contact/{}/contact-types".format(c_id))
+        self.assertEqual(response.status_code, 404)
+
+        c = Contact(
+            id=c_id,
+            name="dummy name",
+            email="dummy email",
+            cellphone="dummy cellphone",
+            role="dummy role",
+            organization="dummy organization",
+            neighbourhood="dummy neighbourhood",
+        )
+        ct0_id = uuid.uuid4()
+        ct0 = ContactType(
+            id=ct0_id,
+            hex_colour="#fffffff",
+            type="dummy type",
+            description="dummy description",
+            contacts=[c],
+        )
+        ct1_id = uuid.uuid4()
+        ct1 = ContactType(
+            id=ct1_id,
+            hex_colour="#ddddddd",
+            type="dummy type 1",
+            description="dummy description 1",
+            contacts=[c],
+        )
+        db.session.add_all([ct0, ct1])
+        db.session.commit()
+
+        # get a non-existent contact's contact types
+        response = self.client.get("/contact/{}/contact-types".format(c_id))
+        self.assertEqual(response.status_code, 200)
+        json_response = response.get_json()
+        self.assertEqual(len(json_response), 2)
+        actual_ids = [json_response[0]["id"], json_response[1]["id"]]
+        expected_ids = [str(ct0_id), str(ct1_id)]
+        self.assertCountEqual(expected_ids, actual_ids)
