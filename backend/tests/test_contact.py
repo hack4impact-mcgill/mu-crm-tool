@@ -101,8 +101,8 @@ class ContactTestCase(unittest.TestCase):
         expected_ids = [str(ct0_id), str(ct1_id)]
         self.assertCountEqual(expected_ids, actual_ids)
 
-# test edit a contact
-def test_edit_a_contact(self):
+    # test edit a contact
+    def test_edit_a_contact(self):
         dummy_ct_id = uuid.uuid4()
         dummy_ct = ContactType(
             id=dummy_ct_id,
