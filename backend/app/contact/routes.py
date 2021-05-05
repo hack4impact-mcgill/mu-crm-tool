@@ -87,6 +87,7 @@ def edit_contact(id):
 
     return jsonify(contact.serialize)
 
+
 # creating a contact
 @contact.route("", methods=["POST"])
 def create_contact():
