@@ -1,22 +1,16 @@
 import React from "react";
-import "./App.css";
-import "./LogIn.css";
-import LogIn from "./LogIn";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Routes } from "./routes";
+import NavBar from "./components/common/navbar";
 
 const App = () => {
   return (
-    <div className="App">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <LogIn />
-      </div>
-    </div>
+    <React.Fragment>
+      <Router>
+        <NavBar />
+        <Routes />
+      </Router>
+    </React.Fragment>
   );
 };
 

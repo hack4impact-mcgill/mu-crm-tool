@@ -1,4 +1,4 @@
-name: Lint
+name: server-lint
 
 on: [pull_request]
 
@@ -7,5 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - uses: psf/black@stable
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - name: Black
+        uses: psf/black@20.8b1
