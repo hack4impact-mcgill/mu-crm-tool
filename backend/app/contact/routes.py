@@ -132,5 +132,6 @@ def create_contact():
     # add contact to the contact types list of contacts
     ct.contacts.append(new_contact)
     db.session.add(new_contact)
+    db.session.add(ct)
     db.session.commit()
     return jsonify(new_contact.serialize)

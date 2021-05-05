@@ -222,9 +222,12 @@ class ContactTestCase(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 200)
         c = json.loads(response.get_data(as_text=True))
-
+        
         # check that the contact type has been properly added
-        contact_type = Contact.query.filter_by(id=c["id"]).first()
+        # contact_type = ContactType.query.filter_by(id=c["id"]).first()
+
+        # check that the contact has been properly added
+        self.assertIsNotNone(Contact.query.filter_by(id=c["id"]).first())
         
         # creating a contact with invalid fields
         response = self.client.post(
@@ -258,4 +261,20 @@ class ContactTestCase(unittest.TestCase):
 
         # check that the contact has been properly added at the correct id
         contact_type = Contact.query.filter_by(id=c["id"]).first()
+
+        # creating a contact with empty fields
+        response = self.client.post(
+            "/contact",
+            json={
+                "name": "",
+                "email": "",
+                "secondary_email": "",
+                "cellphone": "",
+                "role": "",
+                "organization": "",
+                "neighbourhood": "",
+                "contact_type": "",
+            },
+        )
+        self.assertEqual(response.status_code, 400)
 
