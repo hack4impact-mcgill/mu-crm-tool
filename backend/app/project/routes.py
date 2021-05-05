@@ -57,6 +57,14 @@ def get_all_project_types():
         types.append(project.type)
     return jsonify(types)
 
+# helper returns all project boroughs
+@project.route("/boroughs", methods=["GET"])
+def get_all_project_boroughs():
+    boroughs = []
+    for project in Project.query.distinct(Project.neighbourhood):
+        boroughs.append(project.neighbourhood)
+    return jsonify(boroughs)
+
 
 # get projects according to specified arguments (if any)
 @project.route("", methods=["GET"])
