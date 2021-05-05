@@ -11,6 +11,7 @@ export enum RouteName {
   DONORS = "/donors",
   CONTACTS = "/contacts",
   HOME = "/",
+  LOGIN = "/login",
 }
 
 const Home = loadable(() => import("../components/pages/home"), {
@@ -33,6 +34,10 @@ const UserPage = loadable(() => import("../components/pages/user"), {
   fallback: <CircularProgress />,
 });
 
+const LogInPage = loadable(() => import("../components/pages/login"), {
+  fallback: <CircularProgress />,
+});
+
 export const Routes: React.FC = () => {
   return (
     <div className="main">
@@ -51,6 +56,9 @@ export const Routes: React.FC = () => {
         </Route>
         <Route path={RouteName.CONTACTS}>
           <ContactPage />
+        </Route>
+        <Route path={RouteName.LOGIN}>
+          <LogInPage />
         </Route>
         <Route path={RouteName.HOME}>
           <Home />
