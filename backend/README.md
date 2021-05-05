@@ -59,7 +59,6 @@ The URL for the (development) database in container is `"postgresql://mucrm:mucr
 
 ## Flask Migrate
 <200b> Please note that the migration script generated may not always be correct. When generating a migration script, please remember to go through the script in `migrations/versions/<your_migration>`.
-<200b> Make sure you have the containers and virtual environment up and running.
 
 To apply latest schema changes (after pulling from `main` or a new remote branch or after generating a new migration)
 ```
