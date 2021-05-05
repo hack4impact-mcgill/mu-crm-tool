@@ -57,6 +57,7 @@ def get_all_project_types():
         types.append(project.type)
     return jsonify(types)
 
+
 # helper returns all project boroughs
 @project.route("/boroughs", methods=["GET"])
 def get_all_project_boroughs():
