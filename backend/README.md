@@ -57,6 +57,20 @@ docker-compose down -v
 ​
 The URL for the (development) database in container is `"postgresql://mucrm:mucrm@localhost:5432/postgres"`
 
+## Flask Migrate
+<200b> Please note that the migration script generated may not always be correct. When generating a migration script, please remember to go through the script in `migrations/versions/<your_migration>`.
+<200b> Make sure you have the containers and virtual environment up and running.
+
+To apply latest schema changes (after pulling from `main` or a new remote branch or after generating a new migration)
+```
+python manage.py db upgrade
+```
+<200b>
+To generate a new migration after making changes to the schema (E.g. changing the type of a field in models.py)
+```
+python manage.py db migrate -m "<please put message describing change here>"
+```
+
 
 ## Flask App Folder Structure
 
