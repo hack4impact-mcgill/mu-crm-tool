@@ -222,10 +222,7 @@ class ContactTestCase(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 200)
         c = json.loads(response.get_data(as_text=True))
-        
-        # check that the contact type has been properly added
-        # contact_type = ContactType.query.filter_by(id=c["id"]).first()
-
+       
         # check that the contact has been properly added
         self.assertIsNotNone(Contact.query.filter_by(id=c["id"]).first())
         
