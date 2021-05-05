@@ -108,6 +108,40 @@ class ProjectTestCase(unittest.TestCase):
         json_response = json.loads(response.get_data(as_text=True))
         self.assertEqual(json_response, test_list)
 
+    def test_get_all_boroughs(self):
+        test_list = ["borough1", "borough2"]
+        p1 = Project(
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood=test_list[0],
+            year=2020,
+            name="dummy name",
+            type="dummy type",
+            contacts=[],
+            is_completed=False,
+        )
+        p2 = Project(
+            address="dummy address",
+            city="dummy city",
+            province="dummy province",
+            postal_code="dummy postal_code",
+            neighbourhood=test_list[1],
+            year=2020,
+            name="dummy name",
+            type="dummy type",
+            contacts=[],
+            is_completed=False,
+        )
+        db.session.add_all([p1, p2])
+        db.session.commit()
+
+        response = self.client.get("/project/boroughs")
+        self.assertEqual(response.status_code, 200)
+        json_response = json.loads(response.get_data(as_text=True))
+        self.assertEqual(json_response, test_list)
+
     def test_get_specific_type(self):
         test_list = ["dummy type", "dummy type 2"]
         p1 = Project(
