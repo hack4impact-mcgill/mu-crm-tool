@@ -20,27 +20,28 @@ const LogInPage: React.FC = () => {
   };
 
   return (
-    <form>
+    <form
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Logo className="logo" />
-      <label></label>
       <br />
-      <label>
-        <input
-          name="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => onEmailChange(e)}
-        />
-      </label>
-      <label>
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => onPasswordChange(e)}
-        />
-      </label>
+      <input
+        name="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => onEmailChange(e)}
+      />
+      <input
+        name="password"
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => onPasswordChange(e)}
+      />
       <button color="#00000" onClick={(e) => onSubmit(e)}>
         Submit
       </button>{" "}
