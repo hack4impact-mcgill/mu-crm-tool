@@ -4,6 +4,7 @@ from app.models import Contact, ContactType
 from . import contact
 import uuid
 
+
 # create a contact
 @contact.route("", methods=["POST"])
 def create_contact():
