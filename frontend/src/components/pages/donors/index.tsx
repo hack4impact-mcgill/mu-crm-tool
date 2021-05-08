@@ -19,9 +19,9 @@ const Donors: React.FC<DonorProp> = ({ donors }) => {
     <ul>
       {donors.map((donor) => (
         <li key={donor.name}>
-          {donor.name}
-          {donor.email}
-          {donor.returning ? "returning" : "new"}
+          {donor.name + " "}
+          {donor.email + " "}
+          {donor.returning ? "returning" : "new" + " "}
         </li>
       ))}
     </ul>
@@ -67,7 +67,6 @@ const DonorPage: React.FC = () => {
     dispatch(getDonors());
   }, [dispatch]);
 
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [donorsPerPage, setDonorsPerPage] = useState(15);
