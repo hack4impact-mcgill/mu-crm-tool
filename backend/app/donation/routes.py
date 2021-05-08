@@ -22,8 +22,18 @@ def create_donation():
     added_by = data.get("added_by")
     amount = data.get("amount")
     # Check if nullable=False columns are empty
-    if name == "" or donation_source == "" or email == "" or data == {}:
-        abort(400, "Name, doantion_source, and email can not be empty")
+    if (
+        name == ""
+        or donation_source == ""
+        or email == ""
+        or added_by == ""
+        or data == {}
+    ):
+        abort(400, "Name, doantion_source, and email, added_by can not be empty")
+
+    if MuUser.query.get(added_by) is None:
+        abort(404, "No user found with specified ID")
+
     new_donation = Donation(
         name=name,
         email=email,
@@ -79,6 +89,9 @@ def update_donation(donation_uuid):
     if num_tickets:
         donation.num_tickets = num_tickets
     if added_by:
+        if MuUser.query.get(added_by) is None:
+            abort(404, "No user found with specified ID")
+
         donation.added_by = added_by
     if amount:
         donation.amount = amount
