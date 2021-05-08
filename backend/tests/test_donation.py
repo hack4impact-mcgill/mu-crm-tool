@@ -1,6 +1,7 @@
 import unittest
 import uuid
 import json
+import os
 from app import create_app, db
 from app.models import Donation, MuUser
 import datetime
@@ -209,3 +210,30 @@ class DonationTestCase(unittest.TestCase):
 
         response2 = self.client.delete("/donation/{}".format(d_id))
         self.assertEqual(response2.status_code, 200)
+
+    def test_csv(self):
+        added_by = uuid.uuid4()
+        u = MuUser(
+            id=added_by,
+            name="dummy",
+            email="email_address",
+            role="dummy role",
+        )
+        db.session.add(u)
+        db.session.commit()
+        fpaths = ["tests/assets/dummy.csv"]
+        files = []
+        try:
+            files = [open(fpath, "rb") for fpath in fpaths]
+            response = self.client.post(
+                "/donation/csvs",
+                content_type="multipart/form-data",
+                data={"added_by": added_by, "files": files},
+            )
+        finally:
+            for f in files:
+                f.close()
+
+        self.assertEqual(response.status_code, 200)
+        json_response = response.get_json()
+        self.assertEqual(len(json_response), 1)
