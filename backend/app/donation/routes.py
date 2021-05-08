@@ -130,7 +130,7 @@ def get_donation_amount():
         return jsonify(total_amount=total_amount)
 
 
-@donation.route("/donation-csv", methods=["POST"])
+@donation.route("/csvs", methods=["POST"])
 def parse_csvs():
     donations = []
     added_by = request.form["added_by"]
