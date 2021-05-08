@@ -270,7 +270,7 @@ class DonationTestCase(unittest.TestCase):
         try:
             files = [open(fpath, "rb") for fpath in fpaths]
             response = self.client.post(
-                "/donation/csvs",
+                "/donation/csv",
                 content_type="multipart/form-data",
                 data={"added_by": added_by, "files": files},
             )
