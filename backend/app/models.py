@@ -73,7 +73,7 @@ class Project(db.Model):
     city = db.Column(db.String(64))
     province = db.Column(db.String(64))
     postal_code = db.Column(db.String(64))
-    neighbourhood = db.Column(db.String(256))
+    neighbourhood = db.Column(db.String(256), nullable=False)
     year = db.Column(db.Integer)
     name = db.Column(db.String(64))
     type = db.Column(db.String(64))
