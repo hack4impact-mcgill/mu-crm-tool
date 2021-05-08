@@ -16,7 +16,7 @@ class Donation(db.Model):
     donation_source = db.Column(db.String(128), nullable=False)
     event = db.Column(db.String(128))
     num_tickets = db.Column(db.Integer)
-    added_by = db.Column(UUID(as_uuid=True), db.ForeignKey("users.id"), nullable=True)
+    added_by = db.Column(UUID(as_uuid=True), db.ForeignKey("users.id"), nullable=False)
     amount = db.Column(db.Integer, nullable=False)
 
     @property

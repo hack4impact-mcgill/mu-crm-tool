@@ -21,6 +21,15 @@ class DonationTestCase(unittest.TestCase):
         self.app_context.pop()
 
     def test_donation_model(self):
+        u_id = uuid.uuid4()
+        u = MuUser(
+            id=u_id,
+            name="dummy",
+            email="email_address",
+            role="dummy role",
+        )
+        db.session.add(u)
+        db.session.commit()
         failing_case = Donation(
             name="dummy",
             email="dummy@gamil.com",
@@ -28,6 +37,7 @@ class DonationTestCase(unittest.TestCase):
             donation_source="dummy",
             event="dummy",
             num_tickets=2,
+            added_by=u_id,
         )
         passing_case = Donation(
             name="dummy",
@@ -37,6 +47,7 @@ class DonationTestCase(unittest.TestCase):
             event="dummy",
             num_tickets=2,
             amount=200,
+            added_by=u_id,
         )
         db.session.add(passing_case)
         db.session.commit()
@@ -49,6 +60,16 @@ class DonationTestCase(unittest.TestCase):
         self.assertRaises(IntegrityError, db.session.commit)
 
     def test_get_amount(self):
+        u_id = uuid.uuid4()
+        u = MuUser(
+            id=u_id,
+            name="dummy",
+            email="email_address",
+            role="dummy role",
+        )
+        db.session.add(u)
+        db.session.commit()
+
         email_address = "dummy@gamil.com"
         d1 = Donation(
             name="dummy",
@@ -58,6 +79,7 @@ class DonationTestCase(unittest.TestCase):
             event="dummy",
             num_tickets=2,
             amount=200,
+            added_by=u_id,
         )
         d2 = Donation(
             name="dummy2",
@@ -67,6 +89,7 @@ class DonationTestCase(unittest.TestCase):
             event="dummy2",
             num_tickets=2,
             amount=300,
+            added_by=u_id,
         )
 
         db.session.add_all([d1, d2])
@@ -140,6 +163,16 @@ class DonationTestCase(unittest.TestCase):
         self.assertEqual(response2.status_code, 200)
 
     def test_update_donation(self):
+        u_id = uuid.uuid4()
+        u = MuUser(
+            id=u_id,
+            name="dummy",
+            email="email_address",
+            role="dummy role",
+        )
+        db.session.add(u)
+        db.session.commit()
+
         d_id = uuid.uuid4()
         d = Donation(
             id=d_id,
@@ -150,6 +183,7 @@ class DonationTestCase(unittest.TestCase):
             event="dummy",
             num_tickets=2,
             amount=200,
+            added_by=u_id,
         )
         db.session.add(d)
         db.session.commit()
@@ -194,6 +228,16 @@ class DonationTestCase(unittest.TestCase):
         response = self.client.delete("/donation/{}".format(d_id))
         self.assertEqual(response.status_code, 404)
 
+        u_id = uuid.uuid4()
+        u = MuUser(
+            id=u_id,
+            name="dummy",
+            email="email_address",
+            role="dummy role",
+        )
+        db.session.add(u)
+        db.session.commit()
+
         d = Donation(
             id=d_id,
             name="dummy",
@@ -203,6 +247,7 @@ class DonationTestCase(unittest.TestCase):
             event="dummy",
             num_tickets=2,
             amount=200,
+            added_by=u_id,
         )
         db.session.add(d)
         db.session.commit()
