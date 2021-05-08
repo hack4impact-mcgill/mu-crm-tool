@@ -72,7 +72,8 @@ const NavBar: React.FC = () => {
         </li>
         <li className="nav-item">
           <NavLink
-            to={"/map"}
+            to={{ pathname: "https://mumap.xyz/" }}
+            target="_blank"
             className="nav-link"
             activeClassName="selected"
             exact
