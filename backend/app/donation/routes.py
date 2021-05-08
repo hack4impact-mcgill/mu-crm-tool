@@ -1,7 +1,8 @@
 from flask import request, abort, jsonify
+import pandas as pd
 from . import donation
 from .. import db
-from app.models import Donation
+from app.models import Donation, MuUser
 import uuid
 from datetime import datetime
 
@@ -21,8 +22,18 @@ def create_donation():
     added_by = data.get("added_by")
     amount = data.get("amount")
     # Check if nullable=False columns are empty
-    if name == "" or donation_source == "" or email == "" or data == {}:
-        abort(400, "Name, doantion_source, and email can not be empty")
+    if (
+        name == ""
+        or donation_source == ""
+        or email == ""
+        or added_by == ""
+        or data == {}
+    ):
+        abort(400, "Name, doantion_source, and email, added_by can not be empty")
+
+    if MuUser.query.get(added_by) is None:
+        abort(404, "No user found with specified ID")
+
     new_donation = Donation(
         name=name,
         email=email,
@@ -78,6 +89,9 @@ def update_donation(donation_uuid):
     if num_tickets:
         donation.num_tickets = num_tickets
     if added_by:
+        if MuUser.query.get(added_by) is None:
+            abort(404, "No user found with specified ID")
+
         donation.added_by = added_by
     if amount:
         donation.amount = amount
@@ -114,3 +128,64 @@ def get_donation_amount():
 
         total_amount = sum([donation.amount for donation in filtered_donation])
         return jsonify(total_amount=total_amount)
+
+
+@donation.route("/csv", methods=["POST"])
+def parse_csvs():
+    donations = []
+    added_by = request.form["added_by"]
+    if added_by is None:
+        abort(404, "Must specify user who added csvs")
+
+    if MuUser.query.get(added_by) is None:
+        abort(404, "User not found with specified ID")
+
+    for f in request.files.getlist("files"):
+        df = pd.read_csv(f)
+        for _, row in df.iterrows():
+            first_name = row["DONOR FIRST NAME"]
+            last_name = row["DONOR LAST NAME"]
+            if pd.isna(first_name) and pd.isna(last_name):
+                abort(404, "Name fields are empty")
+
+            name = first_name + " " + last_name
+            email = row["DONOR EMAIL ADDRESS"]
+            if pd.isna(email):
+                abort(404, "Email field is empty")
+
+            date = row["DONATION DATE"]
+            if pd.isna(date):
+                abort(404, "Date field is empty")
+
+            donation_source = row["DONATION SOURCE"]
+            if pd.isna(donation_source):
+                abort(404, "Donation source field is empty")
+
+            amount = row["AMOUNT"]
+            if pd.isna(amount):
+                abort(404, "Amount field is empty")
+
+            donation = Donation(
+                name=name,
+                email=email,
+                date=date,
+                donation_source=donation_source,
+                amount=amount,
+                added_by=added_by,
+            )
+
+            if "TICKETS PURCHASED" in df.columns:
+                num_tickets = row["TICKETS PURCHASED"]
+                if not pd.isna(num_tickets):
+                    donation.num_tickets = num_tickets
+
+            if "TICKET NAME" in df.columns:
+                event = row["TICKET NAME"]
+                if not pd.isna(event):
+                    donation.event = event
+
+            db.session.add(donation)
+            db.session.commit()
+            donations.append(donation)
+
+    return jsonify(Donation.serialize_list(donations))
