@@ -257,7 +257,7 @@ class ContactTestCase(unittest.TestCase):
         c = json.loads(response.get_data(as_text=True))
 
         # check that the contact has been properly added at the correct id
-        contact_type = Contact.query.filter_by(id=c["id"]).first()
+        self.assertIsNotNone(Contact.query.filter_by(id=c["id"]).first())
 
         # creating a contact with empty fields
         response = self.client.post(
