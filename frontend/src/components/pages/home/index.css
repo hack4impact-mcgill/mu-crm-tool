@@ -1,0 +1,16 @@
+.projects {
+    margin: auto;
+    width: 90%;
+}
+
+.projectContainer {
+    display: flex;
+    /* so white space is evenly distributed */
+    justify-content: space-between;
+    width: auto;
+    flex-wrap: wrap;
+}
+.projectDisplay {
+    display: inline-block;
+    width: 30%;
+}

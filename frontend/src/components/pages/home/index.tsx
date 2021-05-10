@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
 import ProjectDisplay from "./components/project";
 import SimpleSelect from "./components/dropdown";
+import "./index.css";
 
 import {
     getProjects,
@@ -33,7 +34,7 @@ const Home: React.FC = () => {
     }, [dispatch]);
 
     return (
-        <div>
+        <div className="projects">
             <h2>In Progress</h2>
             <SimpleSelect
                 label="Boroughs"
@@ -63,7 +64,7 @@ const Home: React.FC = () => {
                 }
             />
             <SimpleSelect
-                label="Project Type"
+                label="ProjectTypes"
                 items={types}
                 selected="None"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -88,24 +89,58 @@ const Home: React.FC = () => {
                 }
             />
             <hr />
-            <div>
-                {inProgressProjects.map((inProgressProject) => (
+            <div className="projectContainer">
+                {/* testers */}
+                <div className="projectDisplay">
                     <ProjectDisplay
-                        name={inProgressProject.name}
-                        type={inProgressProject.type}
-                        neighbourhood={inProgressProject.neighbourhood}
+                        name="Project 1"
+                        neighbourhood="Borough"
+                        type="Project Type"
                     />
+                </div>
+                <div className="projectDisplay">
+                    <ProjectDisplay
+                        name="Project 2"
+                        neighbourhood="Borough"
+                        type="Project Type"
+                    />
+                </div>
+                <div className="projectDisplay">
+                    <ProjectDisplay
+                        name="Project 3"
+                        neighbourhood="Borough"
+                        type="Project Type"
+                    />
+                </div>
+                <div className="projectDisplay">
+                    <ProjectDisplay
+                        name="Project 4"
+                        neighbourhood="Borough"
+                        type="Project Type"
+                    />
+                </div>
+                {/* tester end */}
+                {inProgressProjects.map((inProgressProject) => (
+                    <div className="projectDisplay">
+                        <ProjectDisplay
+                            name={inProgressProject.name}
+                            neighbourhood={inProgressProject.type}
+                            type={inProgressProject.neighbourhood}
+                        />
+                    </div>
                 ))}
             </div>
             <h2>Completed</h2>
             <hr />
-            <div>
+            <div className="projectContainer">
                 {completedProjects.map((completedProject) => (
-                    <ProjectDisplay
-                        name={completedProject.name}
-                        type={completedProject.type}
-                        neighbourhood={completedProject.neighbourhood}
-                    />
+                    <div className="projectDisplay">
+                        <ProjectDisplay
+                            name={completedProject.name}
+                            neighbourhood={completedProject.type}
+                            type={completedProject.neighbourhood}
+                        />
+                    </div>
                 ))}
             </div>
         </div>
