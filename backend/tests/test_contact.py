@@ -192,3 +192,85 @@ class ContactTestCase(unittest.TestCase):
             data=json.dumps({}),
         )
         self.assertEqual(response.status_code, 404)
+
+    # testing creating a contact
+    def test_create_a_contact(self):
+        dummy_ct_id = uuid.uuid4()
+        dummy_ct = ContactType(
+            id=dummy_ct_id,
+            hex_colour="#ffffff",
+            type="dummy type",
+            description="dummy description",
+            contacts=[],
+        )
+        db.session.add(dummy_ct)
+        db.session.commit()
+
+        # creating a contact with valid inputs
+        response = self.client.post(
+            "/contact",
+            json={
+                "name": "dummy name",
+                "email": "dummy email",
+                "secondary_email": "dummy secondary email",
+                "cellphone": "dummy cell phone",
+                "role": "dummy role",
+                "organization": "dummy organization",
+                "neighbourhood": "dummy neighbourhood",
+                "contact_type": dummy_ct_id,
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        c = json.loads(response.get_data(as_text=True))
+
+        # check that the contact has been properly added
+        self.assertIsNotNone(Contact.query.filter_by(id=c["id"]).first())
+
+        # creating a contact with invalid fields
+        response = self.client.post(
+            "/contact",
+            json={
+                "name": "dummy name",
+                "email": "",
+                "secondary_email": "dummy secondary email",
+                "cellphone": "dummy cell phone",
+                "role": "dummy role",
+                "organization": "dummy organization",
+                "neighbourhood": "dummy neighbourhood",
+                "contact_type": dummy_ct_id,
+            },
+        )
+        self.assertEqual(response.status_code, 400)
+
+        # creating a contact with only required fields
+        response = self.client.post(
+            "/contact",
+            json={
+                "name": "dummy name",
+                "email": "dummy email",
+                "cellphone": "dummy cellphone",
+                "organization": "dummy organization",
+                "contact_type": dummy_ct_id,
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        c = json.loads(response.get_data(as_text=True))
+
+        # check that the contact has been properly added at the correct id
+        self.assertIsNotNone(Contact.query.filter_by(id=c["id"]).first())
+
+        # creating a contact with empty fields
+        response = self.client.post(
+            "/contact",
+            json={
+                "name": "",
+                "email": "",
+                "secondary_email": "",
+                "cellphone": "",
+                "role": "",
+                "organization": "",
+                "neighbourhood": "",
+                "contact_type": "",
+            },
+        )
+        self.assertEqual(response.status_code, 400)
