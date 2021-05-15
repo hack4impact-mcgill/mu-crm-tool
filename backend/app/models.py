@@ -7,16 +7,20 @@ from datetime import date
 import random
 import string
 
+
 def random_bool():
     return random.choice([True, False])
 
+
 def random_str(n):
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=n))
+    return "".join(random.choices(string.ascii_letters + string.digits, k=n))
+
 
 def random_date():
     start = date.today().replace(day=1, month=1).toordinal()
     end = date.today().toordinal()
     return date.fromordinal(random.randint(start, end))
+
 
 # create model classes here
 
@@ -67,7 +71,7 @@ class Donation(db.Model):
                 event=random_str(128),
                 num_tickets=random.randint(0, 1000),
                 added_by=added_by,
-                amount=random.randint(0, 1000)
+                amount=random.randint(0, 1000),
             )
             db.session.add(donation)
         db.session.commit()
@@ -151,7 +155,7 @@ class Project(db.Model):
                 neighbourhood=random_str(256),
                 name=random_str(64),
                 type=random_str(64),
-                is_completed=random_bool()
+                is_completed=random_bool(),
             )
             db.session.add(project)
         db.session.commit()
@@ -228,7 +232,7 @@ class Contact(db.Model):
                 cellphone=random_str(256),
                 role=random_str(256),
                 organization=random_str(256),
-                neighbourhood=random_str(256)
+                neighbourhood=random_str(256),
             )
             db.session.add(contact)
         db.session.commit()
@@ -267,10 +271,11 @@ class ContactType(db.Model):
             contact_type = ContactType(
                 hex_colour=random_str(8),
                 type=random_str(64),
-                description=random_str(512)
+                description=random_str(512),
             )
             db.session.add(contact_type)
         db.session.commit()
+
 
 # MuUser Domain Model Class
 class MuUser(db.Model):
@@ -309,9 +314,7 @@ class MuUser(db.Model):
     def populate(n=20):
         for _ in range(n):
             user = MuUser(
-                name=random_str(64),
-                email=random_str(64),
-                role=random_str(32)
+                name=random_str(64), email=random_str(64), role=random_str(32)
             )
             db.session.add(user)
         db.session.commit()

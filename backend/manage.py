@@ -36,6 +36,7 @@ def test():
     else:
         exit(1)
 
+
 @manager.command
 def populate():
     """Populates the dev db."""
