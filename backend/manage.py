@@ -3,7 +3,7 @@ import os
 import sys
 
 from flask_script import Manager
-from flask_migrate import MigrateCommand
+from flask_migrate import MigrateCommand, upgrade
 
 # Import settings from .env file. Must define FLASK_CONFIG
 if os.path.exists(".env"):
@@ -14,6 +14,7 @@ if os.path.exists(".env"):
             os.environ[var[0]] = var[1]
 
 from app import create_app
+from app.models import Donation, Project, Contact, ContactType, MuUser
 
 manager = Manager(create_app)
 # e.g. "python manage.py --config development runserver"
@@ -34,6 +35,16 @@ def test():
         exit(0)
     else:
         exit(1)
+
+@manager.command
+def populate():
+    """Populates the dev db."""
+    upgrade()
+    Project.populate()
+    Contact.populate()
+    ContactType.populate()
+    MuUser.populate()
+    Donation.populate()
 
 
 if __name__ == "__main__":
