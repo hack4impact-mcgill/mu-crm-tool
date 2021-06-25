@@ -1,0 +1,28 @@
+.project-parent-box{
+    margin: 5%;
+}
+
+.project-card-box{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.project-card-box > .project-card{
+    width: 30%;
+}
+
+.project-card-box::after{
+    content:"";
+    flex: 0 0 30%;
+}
+
+hr {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.title-box {
+    border-style: None !important;
+}
