@@ -1,0 +1,46 @@
+* {
+    max-width: 100%;
+    max-width: 100%
+}
+p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    font-size: 1rem
+}
+img {
+    margin-bottom: 3%;
+    border-radius: 2%;
+}
+
+.description-box{
+    display: flex;
+    align-items:baseline;
+    justify-content: space-between;
+    margin-bottom: 10%;
+}
+
+.description-box > *{
+    width: 50%;
+}
+
+.chips > *{
+    width: 48%;
+}
+
+.neighbourhood {
+    border-radius: 10% !important;
+    margin-right: 4%;
+    background-color: #4FF6D1 !important;
+    font-weight: bold;
+    font-size: 1rem !important;
+
+}
+
+.type {
+    border-radius: 10% !important;
+    background-color: #FFB256 !important;
+    font-weight: bold;
+    font-size: 1rem !important;
+}
